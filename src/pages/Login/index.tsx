@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useStyles from "./style";
 import LoginApresentation from "../../common/components/LoginApresentation";
 import LoginPaper from "../../common/components/LoginPaper";
+import RegisterPaper from "../../common/components/RegisterPaper";
 
 export default function Login() {
   const { classes } = useStyles();
@@ -11,7 +12,8 @@ export default function Login() {
   return (
     <Group className={classes.group}>
       <LoginApresentation />
-      <LoginPaper />
+      {/* <LoginPaper /> */}
+      <RegisterPaper />
     </Group>
   );
 }
