@@ -16,6 +16,7 @@ import { useState } from "react";
 import ErrorMessage from "../ErrorMessage";
 
 type Formtype = {
+  name: string;
   email: string;
   password: string;
 };
@@ -26,6 +27,7 @@ export default function RegisterPaper() {
   const [error, setError] = useState("");
   //Email ou senha inválidos.
   const formSchema = yup.object().shape({
+    name: yup.string().required("É preciso digitar um nome"),
     email: yup
       .string()
       .email("É preciso ser um email válido")
@@ -42,6 +44,7 @@ export default function RegisterPaper() {
 
   const form = useForm({
     initialValues: {
+      name: "",
       email: "",
       password: "",
     },
@@ -67,12 +70,26 @@ export default function RegisterPaper() {
             >
               Bem-Vindo!
             </Text>
-            <Text className={classes.text}>Realize o cadastro</Text>
+            <Text
+              variant="gradient"
+              gradient={{ from: "indigo", to: "cyan", deg: 45 }}
+              className={classes.text}
+            >
+              Realize o cadastro
+            </Text>
           </Stack>
           <form
             className={classes.form}
             onSubmit={form.onSubmit((values) => onFinish(values))}
           >
+            <TextInput
+              className={classes.input}
+              withAsterisk
+              label="Nome"
+              placeholder="Seu Nome"
+              {...form.getInputProps("name")}
+            />
+
             <TextInput
               className={classes.input}
               withAsterisk
@@ -104,7 +121,12 @@ export default function RegisterPaper() {
             </Button>
           </form>
           <Anchor className={classes.text} href="">
-            <Text>Voltar</Text>
+            <Text
+              variant="gradient"
+              gradient={{ from: "indigo", to: "cyan", deg: 45 }}
+            >
+              Voltar
+            </Text>
           </Anchor>
         </Stack>
       </Paper>

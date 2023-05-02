@@ -16,12 +16,14 @@ const useStyles = createStyles((theme) => ({
     alignItems: "center",
     fontWeight: 700,
     fontSize: "3rem",
+    color: "#565656",
+    lineHeight: "1.2",
   },
   text: {
     textAlign: "center",
     fontWeight: 700,
     fontSize: "1rem",
-    color: "#A4A4A4",
+    color: "#565656",
     paddingBottom: "1rem",
   },
   button: {
