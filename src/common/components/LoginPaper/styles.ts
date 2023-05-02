@@ -10,10 +10,10 @@ const useStyles = createStyles((theme) => ({
     display: "flex",
   },
   paper: {
-    backgroundColor: "#202024",
+    //backgroundColor: "#202024",
     color: "#FFFF",
-    border: "1.5px solid #717171",
-    boxShadow: "5px 8px 4px 6px rgba(0, 0, 0, 0.25)",
+    border: "1.5px solid #C6C6C6",
+    boxShadow: "5px 8px 4px 3px rgba(0, 0, 0, 0.25)",
     width: "32rem",
     borderRadius: "15px",
     padding: "2rem",

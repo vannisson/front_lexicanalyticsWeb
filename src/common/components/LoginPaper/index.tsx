@@ -64,7 +64,13 @@ export default function LoginPaper() {
             >
               Bem-Vindo!
             </Text>
-            <Text className={classes.text}>Acesse a Ferramenta</Text>
+            <Text
+              variant="gradient"
+              gradient={{ from: "indigo", to: "cyan", deg: 45 }}
+              className={classes.text}
+            >
+              Acesse a Ferramenta
+            </Text>
           </Stack>
           <form
             className={classes.form}
@@ -94,10 +100,20 @@ export default function LoginPaper() {
           </form>
           <Group className={classes.group}>
             <Anchor className={classes.text} href="">
-              <Text>Realizar cadastro</Text>
+              <Text
+                variant="gradient"
+                gradient={{ from: "indigo", to: "cyan", deg: 45 }}
+              >
+                Realizar cadastro
+              </Text>
             </Anchor>
             <Anchor className={classes.text} href="">
-              <Text>Esqueci a senha</Text>
+              <Text
+                variant="gradient"
+                gradient={{ from: "indigo", to: "cyan", deg: 45 }}
+              >
+                Esqueci a senha
+              </Text>
             </Anchor>
           </Group>
         </Stack>
