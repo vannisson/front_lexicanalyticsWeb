@@ -1,9 +1,7 @@
 import { createStyles } from "@mantine/core";
 
 const useStyles = createStyles((theme) => ({
-  stack: {
-    padding: "2rem 0",
-  },
+  stack: {},
   searchBox: {
     display: "flex",
     justifyContent: "center",
