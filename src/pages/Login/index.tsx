@@ -12,8 +12,8 @@ export default function Login() {
   return (
     <Group className={classes.group}>
       <LoginApresentation />
-      {/* <LoginPaper /> */}
-      <RegisterPaper />
+      <LoginPaper />
+      {/* <RegisterPaper /> */}
     </Group>
   );
 }

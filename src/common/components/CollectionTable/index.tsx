@@ -1,4 +1,4 @@
-import { Anchor, Group, Table } from "@mantine/core";
+import { Anchor, Box, Group, Table } from "@mantine/core";
 import useStyles from "./styles";
 import { Icon } from "@iconify/react";
 
@@ -66,18 +66,20 @@ export default function CollectionTable() {
   ));
 
   return (
-    <Table striped className={classes.table}>
-      <thead>
-        <tr>
-          <th>Nome</th>
-          <th>Data</th>
-          <th>Q. de textos</th>
-          <th>Densidade (Média)</th>
-          <th>Diversidade (Média)</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
-    </Table>
+    <Box className={classes.boxTable}>
+      <Table striped className={classes.table}>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Data</th>
+            <th>Q. de textos</th>
+            <th>Densidade (Média)</th>
+            <th>Diversidade (Média)</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+      </Table>
+    </Box>
   );
 }

@@ -1,9 +1,10 @@
 import { createStyles } from "@mantine/core";
 
 const useStyles = createStyles((theme) => ({
-  stack: {},
+  stack: {
+    padding: "2rem 0",
+  },
   searchBox: {
-    width: "100vw",
     display: "flex",
     justifyContent: "center",
   },
@@ -11,12 +12,6 @@ const useStyles = createStyles((theme) => ({
     width: "60%",
     justifyContent: "space-between",
     color: "#565656",
-  },
-  anchor: {
-    color: "#565656",
-    ":hover": {
-      textDecoration: "none",
-    },
   },
   title: {
     textAlign: "initial",
@@ -30,6 +25,14 @@ const useStyles = createStyles((theme) => ({
   },
   newCollection: {
     gap: "0.1rem",
+  },
+  buttonGroup: {
+    gap: "0.2rem",
+  },
+  button: {
+    background:
+      "linear-gradient(45deg, rgb(78, 178, 240) 0%, rgb(38, 104, 223) 100%)",
+    border: "0px",
   },
 }));
 

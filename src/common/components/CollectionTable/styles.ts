@@ -1,9 +1,14 @@
 import { createStyles } from "@mantine/core";
 
 const useStyles = createStyles((theme) => ({
+  boxTable: {
+    width: "60%",
+    borderRadius: "0.25rem",
+    overflow: "hidden",
+  },
   table: {
     color: "#565656",
-    width: "60%",
+    width: "100%",
     borderCollapse: "collapse",
     borderRadius: "16px",
     border: "1px",
