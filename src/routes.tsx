@@ -1,8 +1,9 @@
 import Login from "./pages/Login";
 import "./index.css";
 import { createBrowserRouter } from "react-router-dom";
-import Bar from "./common/components/Bar";
 import Collections from "./pages/Collections";
+import { Box } from "@mantine/core";
+import CustomHeader from "./common/components/CustomHeader";
 
 const router = createBrowserRouter([
   {
@@ -11,7 +12,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/collections",
-    element: <Collections />,
+    element: (
+      <CustomHeader>
+        <Collections />
+      </CustomHeader>
+    ),
   },
 ]);
 
