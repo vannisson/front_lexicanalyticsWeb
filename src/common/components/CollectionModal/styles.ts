@@ -31,6 +31,21 @@ const useStyles = createStyles((theme) => ({
       WebkitTextFillColor: "transparent",
     },
   },
+  descriptionInput: {
+    ".mantine-Textarea-input": {
+      overflowY: "auto",
+      "::-webkit-scrollbar": {
+        color: "transparent",
+      },
+    },
+
+    ".mantine-InputWrapper-label": {
+      background:
+        "linear-gradient(45deg, rgb(78, 178, 240) 0%, rgb(38, 104, 223) 100%)",
+      WebkitBackgroundClip: "text",
+      WebkitTextFillColor: "transparent",
+    },
+  },
 }));
 
 export default useStyles;

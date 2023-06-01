@@ -1,4 +1,12 @@
-import { Anchor, Button, Group, Stack, Text, TextInput } from "@mantine/core";
+import {
+  Anchor,
+  Button,
+  Group,
+  Stack,
+  Text,
+  TextInput,
+  Textarea,
+} from "@mantine/core";
 import useStyles from "./styles";
 import { Icon } from "@iconify/react";
 import * as yup from "yup";
@@ -31,7 +39,13 @@ export default function CollectionModal() {
   return (
     <>
       <Stack className={classes.stack}>
-        <Text className={classes.title}>Criar uma nova coleção</Text>
+        <Text
+          variant="gradient"
+          gradient={{ from: "indigo", to: "cyan", deg: 45 }}
+          className={classes.title}
+        >
+          Criar uma nova coleção
+        </Text>
         <form
           className={classes.form}
           onSubmit={form.onSubmit((values) => onFinish(values))}
@@ -42,6 +56,12 @@ export default function CollectionModal() {
             label="Nome"
             placeholder="Nome da coleção"
             {...form.getInputProps("name")}
+          />
+          <Textarea
+            className={classes.descriptionInput}
+            label="Descrição"
+            placeholder="Descreva algo sobre a coleção"
+            {...form.getInputProps("description")}
           />
           <Group position="center">
             <Button className={classes.button} type="submit">
