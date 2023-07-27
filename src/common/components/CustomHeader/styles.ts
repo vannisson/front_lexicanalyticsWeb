@@ -33,6 +33,7 @@ const useStyles = createStyles(() => ({
   },
   userText: {
     gap: "0.5rem",
+    color: "#565656",
   },
 }));
 

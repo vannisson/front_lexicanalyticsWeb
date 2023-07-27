@@ -15,8 +15,8 @@ import { useForm, yupResolver } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import useStyles from "./style";
 import * as yup from "yup";
-import CollectionTable from "../../common/components/CollectionTable";
 import CollectionModal from "../../common/components/CollectionModal";
+import CustomTable from "../../common/components/CustomTable";
 
 type Formtype = {
   searchWord: string;
@@ -44,6 +44,53 @@ export default function Collections() {
   const onFinish = (values: Formtype) => {
     console.log(values);
   };
+
+  const elements = [
+    {
+      name: "EE_2021",
+      textQuantity: 21,
+      density: 11.5,
+      diversity: 32.1,
+      date: 12.011,
+    },
+    {
+      name: "EE_2020",
+      textQuantity: 21,
+      density: 11.5,
+      diversity: 32.1,
+      date: 12.011,
+    },
+    {
+      name: "EE_2019",
+      textQuantity: 21,
+      density: 11.5,
+      diversity: 32.1,
+      date: 12.011,
+    },
+    {
+      name: "EE_2018",
+      textQuantity: 21,
+      density: 11.5,
+      diversity: 32.1,
+      date: 12.011,
+    },
+    {
+      name: "EE_2017",
+      textQuantity: 21,
+      density: 11.5,
+      diversity: 32.1,
+      date: 12.011,
+    },
+  ];
+
+  const headers = [
+    "Nome",
+    "Q. de textos",
+    "Densidade (Média)",
+    "Diversidade (Média)",
+    "Data",
+    "Ações",
+  ];
 
   return (
     <>
@@ -78,7 +125,7 @@ export default function Collections() {
           </Group>
         </Box>
         <Box className={classes.tableBox}>
-          <CollectionTable />
+          <CustomTable header={headers} data={elements} />
         </Box>
       </Stack>
     </>

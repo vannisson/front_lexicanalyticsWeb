@@ -14,6 +14,7 @@ import useStyles from "./styles";
 import * as yup from "yup";
 import { useState } from "react";
 import ErrorMessage from "../ErrorMessage";
+import { useNavigate } from "react-router-dom";
 
 type Formtype = {
   name: string;
@@ -23,6 +24,7 @@ type Formtype = {
 
 export default function RegisterPaper() {
   const { classes } = useStyles();
+  const navigate = useNavigate();
 
   const [error, setError] = useState("");
   //Email ou senha inválidos.
@@ -124,6 +126,7 @@ export default function RegisterPaper() {
             <Text
               variant="gradient"
               gradient={{ from: "indigo", to: "cyan", deg: 45 }}
+              onClick={() => navigate("/login")}
             >
               Voltar
             </Text>
