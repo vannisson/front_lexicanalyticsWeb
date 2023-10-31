@@ -12,44 +12,42 @@ import {
 import { useForm, yupResolver } from "@mantine/form";
 import useStyles from "./styles";
 import * as yup from "yup";
+import { useMutation } from "react-query";
 import { useState } from "react";
 import ErrorMessage from "../ErrorMessage";
-
-type Formtype = {
-  email: string;
-  password: string;
-};
+import { useNavigate } from "react-router-dom";
+import { LoginSchema, LoginSchemaInitialValues } from "./schema";
+import { login } from "./login.service";
 
 export default function LoginPaper() {
   const { classes } = useStyles();
+  const navigate = useNavigate();
 
-  const [error, setError] = useState("");
-  //Email ou senha inválidos.
-  const formSchema = yup.object().shape({
-    email: yup
-      .string()
-      .email("É preciso ser um email válido")
-      .required("É preciso digitar um email"),
-    password: yup
-      .string()
-      .min(8, "A senha precisar ter no mínimo 8 caracteres")
-      .max(32)
-      .required("É preciso digitar uma senha"),
+  const { isLoading, mutate, error } = useMutation(login, {
+    onSuccess: (data: any) => {
+      navigate("/collections");
+    },
   });
+
+  const err = error as any;
 
   const form = useForm({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-
+    validate: yupResolver(LoginSchema),
+    initialValues: LoginSchemaInitialValues,
     validateInputOnChange: true,
-
-    validate: yupResolver(formSchema),
   });
 
-  const onFinish = (values: Formtype) => {
-    console.log(values);
+  const onSubmit = () => {
+    const { hasErrors } = form.validate();
+
+    if (hasErrors) return;
+
+    const dataToSend = {
+      login: form.values.login,
+      password: form.values.password,
+    };
+    console.log(dataToSend);
+    mutate(dataToSend);
   };
 
   return (
@@ -72,16 +70,13 @@ export default function LoginPaper() {
               Acesse a Ferramenta
             </Text>
           </Stack>
-          <form
-            className={classes.form}
-            onSubmit={form.onSubmit((values) => onFinish(values))}
-          >
+          <form className={classes.form}>
             <TextInput
               className={classes.input}
               withAsterisk
               label="Email"
               placeholder="exemplo@email.com"
-              {...form.getInputProps("email")}
+              {...form.getInputProps("login")}
             />
 
             <PasswordInput
@@ -92,29 +87,38 @@ export default function LoginPaper() {
               {...form.getInputProps("password")}
             />
 
-            {error?.trim()?.length > 0 ? <ErrorMessage text={error} /> : null}
+            {err?.trim()?.length > 0 ? <ErrorMessage text={err} /> : null}
 
-            <Button className={classes.button} type="submit">
+            <Button
+              className={classes.button}
+              type="submit"
+              loading={isLoading}
+              onClick={onSubmit}
+            >
               Entrar
             </Button>
           </form>
           <Group className={classes.group}>
-            <Anchor className={classes.text} href="">
+            <Button
+              variant="subtle"
+              className={classes.text}
+              onClick={() => navigate("/register")}
+            >
               <Text
                 variant="gradient"
                 gradient={{ from: "indigo", to: "cyan", deg: 45 }}
               >
                 Realizar cadastro
               </Text>
-            </Anchor>
-            <Anchor className={classes.text} href="">
+            </Button>
+            <Button variant="subtle" className={classes.text}>
               <Text
                 variant="gradient"
                 gradient={{ from: "indigo", to: "cyan", deg: 45 }}
               >
                 Esqueci a senha
               </Text>
-            </Anchor>
+            </Button>
           </Group>
         </Stack>
       </Paper>

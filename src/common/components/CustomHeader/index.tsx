@@ -46,10 +46,18 @@ export default function CustomHeader({ children }: ICustomAppShell) {
               </Text>
             </Group>
             <Group className={classes.links}>
-              <Button className={classes.button} variant="subtle">
+              <Button
+                onClick={() => navigate("/collections")}
+                className={classes.button}
+                variant="subtle"
+              >
                 Coleções
               </Button>
-              <Button className={classes.button} variant="subtle">
+              <Button
+                onClick={() => navigate("/reports")}
+                className={classes.button}
+                variant="subtle"
+              >
                 Relatórios
               </Button>
               <Button className={classes.button} variant="subtle">
@@ -67,12 +75,13 @@ export default function CustomHeader({ children }: ICustomAppShell) {
                   </Button>
                 </Menu.Target>
                 <Menu.Dropdown>
-                  <Menu.Item
-                    icon={
-                      <Icon icon="streamline:interface-logout-arrow-exit-frame-leave-logout-rectangle-right" />
-                    }
-                  >
-                    Sair
+                  <Menu.Item>
+                    <Button variant="subtle" onClick={() => navigate("/")}>
+                      <Group className={classes.userText}>
+                        <Icon icon="streamline:interface-logout-arrow-exit-frame-leave-logout-rectangle-right" />
+                        <Text>Sair</Text>
+                      </Group>
+                    </Button>
                   </Menu.Item>
 
                   {/* Other items ... */}

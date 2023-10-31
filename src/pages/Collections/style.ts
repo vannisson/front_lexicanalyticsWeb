@@ -1,7 +1,9 @@
 import { createStyles } from "@mantine/core";
 
 const useStyles = createStyles((theme) => ({
-  stack: {},
+  stack: {
+    padding: "2rem 0",
+  },
   searchBox: {
     display: "flex",
     justifyContent: "center",
@@ -20,6 +22,7 @@ const useStyles = createStyles((theme) => ({
   tableBox: {
     display: "flex",
     justifyContent: "center",
+    marginTop: "1rem"
   },
   newCollection: {
     gap: "0.1rem",
