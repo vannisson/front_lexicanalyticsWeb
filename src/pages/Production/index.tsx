@@ -38,16 +38,16 @@ export default function Production() {
             <Text className={classes.textProduction}>
               5 textos já foram adicionados
             </Text>
+            <Button disabled className={classes.button}>
+              <Icon icon="ic:round-file-present" />
+              <Text>Inserir PDF</Text>
+            </Button>
             <Button className={classes.button}>
               <Icon icon="clarity:plus-circle-solid" />
               <Text>Adicionar Texto</Text>
             </Button>
             <Button className={classes.button}>
-              <Icon icon="ic:round-file-present" />
-              <Text>Inserir PDF</Text>
-            </Button>
-            <Button className={classes.button}>
-              <Icon icon="fa6-solid:magnifying-glass" />
+              <Icon icon="teenyicons:pie-chart-solid" />
               <Text>Obter Resultados</Text>
             </Button>
           </Stack>

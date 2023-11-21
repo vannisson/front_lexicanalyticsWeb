@@ -17,7 +17,7 @@ import { useState } from "react";
 import ErrorMessage from "../ErrorMessage";
 import { useNavigate } from "react-router-dom";
 import { LoginSchema, LoginSchemaInitialValues } from "./schema";
-import { login } from "./login.service";
+import { login } from "./Login.service";
 
 export default function LoginPaper() {
   const { classes } = useStyles();

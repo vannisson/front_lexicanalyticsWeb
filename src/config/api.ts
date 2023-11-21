@@ -11,7 +11,7 @@ export class ApiService {
     endpoint: string,
     data: any = "",
     payload: any = "",
-    token: any = localStorage.getItem("@iCer:token") || false
+    // token: any = localStorage.getItem("@lexicanalytics:token") || false
   ) => {
     let url = `${this.apiURL}${endpoint}`;
     if (payload !== "") url = `${url}${payload}`;
@@ -21,7 +21,7 @@ export class ApiService {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          // Authorization: `Bearer ${token}`,
         },
         url,
         data,

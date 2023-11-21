@@ -16,13 +16,16 @@ import { Icon } from "@iconify/react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut, Line, Pie } from "react-chartjs-2";
 import { useState } from "react";
+import "chart.js/auto";
+import GeneralDashboard from "../../common/components/GeneralDashboard";
+import IndividualDashboard from "../../common/components/IndividualDashboard";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function Results() {
   const { classes } = useStyles();
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<string | null>("first");
+  const [activeTab, setActiveTab] = useState<string | null>("byText");
 
   const data = {
     labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
@@ -94,42 +97,37 @@ export default function Results() {
 
   return (
     <Box className={classes.box}>
-      <Text
-        variant="gradient"
-        gradient={{ from: "indigo", to: "cyan", deg: 45 }}
-        className={classes.title}
-      >
-        Resultado Geral:
-      </Text>
-      <Tabs value={activeTab} onTabChange={setActiveTab}>
-        <Tabs.List>
-          <Tabs.Tab value="pie">Pie Chart</Tabs.Tab>
-          <Tabs.Tab value="line">Line Chart</Tabs.Tab>
-          <Tabs.Tab value="table">Table</Tabs.Tab>
+      <Tabs w="80%" value={activeTab} onTabChange={setActiveTab}>
+        <Tabs.List sx={{position:"sticky", top:0, backgroundColor:"white"}}position="center">
+          <Tabs.Tab value="general">
+            <Text
+              variant="gradient"
+              gradient={{ from: "indigo", to: "cyan", deg: 45 }}
+              className={classes.title}
+            >
+              Resultado Geral
+            </Text>
+          </Tabs.Tab>
+          <Tabs.Tab value="byText">
+            <Text
+              variant="gradient"
+              gradient={{ from: "indigo", to: "cyan", deg: 45 }}
+              className={classes.title}
+            >
+              Resultado Individual
+            </Text>
+          </Tabs.Tab>
         </Tabs.List>
 
-        <Tabs.Panel value="pie" pt="xs">
-          <Box className={classes.graph}>
-            <Pie data={data} />
-          </Box>
+        <Tabs.Panel value="general" pt="xs">
+          <GeneralDashboard/>
         </Tabs.Panel>
 
-        <Tabs.Panel value="line" pt="xs">
-          {/* <Line options={options} data={lineData} />; */}
+        <Tabs.Panel value="byText" pt="xs">
+          <IndividualDashboard/>
         </Tabs.Panel>
 
-        <Tabs.Panel value="settings" pt="xs">
-          TR
-        </Tabs.Panel>
       </Tabs>
-
-      <Text
-        variant="gradient"
-        gradient={{ from: "indigo", to: "cyan", deg: 45 }}
-        className={classes.title}
-      >
-        Resultado por texto:
-      </Text>
     </Box>
   );
 }

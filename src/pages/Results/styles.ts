@@ -11,9 +11,11 @@ const useStyles = createStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
     width: "100%",
-    height: "80vh",
-    padding: "1rem 0",
+    height: "90vh",
+    padding: "0",
     gap: "2rem",
+    maxHeight:"90vh",
+    overflow:"auto",
   },
   buttonText: {
     gap: "0.5rem",

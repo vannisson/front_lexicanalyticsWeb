@@ -8,35 +8,35 @@ export default function CollectionTable() {
   const elements = [
     {
       name: "EE_2021",
-      date: 12.011,
+      date: "01/01/2021",
       textQuantity: 21,
       density: 11.5,
       diversity: 32.1,
     },
     {
       name: "EE_2020",
-      date: 12.011,
+      date: "01/01/2020",
       textQuantity: 21,
       density: 11.5,
       diversity: 32.1,
     },
     {
       name: "EE_2019",
-      date: 12.011,
+      date: "01/01/2019",
       textQuantity: 21,
       density: 11.5,
       diversity: 32.1,
     },
     {
       name: "EE_2018",
-      date: 12.011,
+      date: "01/01/2018",
       textQuantity: 21,
       density: 11.5,
       diversity: 32.1,
     },
     {
       name: "EE_2017",
-      date: 12.011,
+      date: "01/01/2017",
       textQuantity: 21,
       density: 11.5,
       diversity: 32.1,
@@ -45,19 +45,18 @@ export default function CollectionTable() {
 
   const rows = elements.map((element) => (
     <tr key={element.name}>
-      <td>
-        <Anchor className={classes.anchor}>{element.name}</Anchor>
-      </td>
+      <td> {element.name}</td>
       <td>{element.date}</td>
       <td>{element.textQuantity}</td>
-      <td>{element.density}</td>
-      <td>{element.diversity}</td>
       <td>
         <Group>
-          <Anchor className={classes.icons}>
-            <Icon icon="material-symbols:edit-square-rounded" />
+          <Anchor className={classes.iconView}>
+            <Icon icon="mdi:eye" />
           </Anchor>
-          <Anchor className={classes.icons}>
+          <Anchor className={classes.iconReport}>
+            <Icon icon="mdi:file-report" />
+          </Anchor>
+          <Anchor className={classes.iconDelete}>
             <Icon icon="material-symbols:delete-forever" />
           </Anchor>
         </Group>
@@ -72,9 +71,7 @@ export default function CollectionTable() {
           <tr>
             <th>Nome</th>
             <th>Data</th>
-            <th>Q. de textos</th>
-            <th>Densidade (Média)</th>
-            <th>Diversidade (Média)</th>
+            <th>Quantidade de textos</th>
             <th>Ações</th>
           </tr>
         </thead>

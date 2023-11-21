@@ -55,6 +55,12 @@ const useStyles = createStyles((theme) => ({
     justifyContent: "space-between",
     padding: "0 3rem",
   },
+   selectContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    gap: "2px",
+    width:"90%", 
+  },
 }));
 
 export default useStyles;

@@ -12,6 +12,7 @@ export const login = async (data: UserType) => {
 };
 
 export const loginSuccess = (data: any) => {
-  localStorage.setItem("@iCer:token", data?.token);
-  localStorage.setItem("@iCer:user", JSON.stringify(data?.user));
+  console.log("works")
+  //localStorage.setItem("@iCer:token", data?.token);
+  //localStorage.setItem("@iCer:user", JSON.stringify(data?.user));
 };

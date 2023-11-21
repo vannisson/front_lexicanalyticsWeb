@@ -8,6 +8,7 @@ import {
   Group,
   Anchor,
   PasswordInput,
+  Select,
 } from "@mantine/core";
 import { useForm, yupResolver } from "@mantine/form";
 import useStyles from "./styles";
@@ -99,6 +100,33 @@ export default function RegisterPaper() {
               placeholder="exemplo@email.com"
               {...form.getInputProps("email")}
             />
+
+            <Box className={classes.selectContainer}>
+            <Select 
+            className={classes.input}
+            label="País"
+            placeholder="-"
+            data={['Brasil', 'Portugal']}
+            required
+            {...form.getInputProps("country")}
+            />
+            <Select
+            className={classes.input}
+            label="Estado"
+            placeholder="-"
+            data={['Alagoas', 'São Paulo',]}
+            required
+            {...form.getInputProps("state")}
+            />
+            <Select
+            className={classes.input}
+            label="Cidade"
+            placeholder="-"
+            data={['Arapiraca', 'Maceió']}
+            required
+            {...form.getInputProps("city")}
+            />
+        </Box>
 
             <PasswordInput
               className={classes.input}
