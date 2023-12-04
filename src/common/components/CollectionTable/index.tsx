@@ -1,85 +1,73 @@
-import { Anchor, Box, Group, Table } from "@mantine/core";
-import useStyles from "./styles";
-import { Icon } from "@iconify/react";
+import { Anchor, Box, Button, Group, Loader, Table } from '@mantine/core'
+import useStyles from './styles'
+import { Icon } from '@iconify/react'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { collectionTable } from './CollectionTable.service'
 
 export default function CollectionTable() {
-  const { classes } = useStyles();
+  const { classes } = useStyles()
+  // const queryClient = useQueryClient()
+  const { isLoading, data, error } = useQuery('collectionData', collectionTable)
 
-  const elements = [
-    {
-      name: "EE_2021",
-      date: 12.011,
-      textQuantity: 21,
-      density: 11.5,
-      diversity: 32.1,
-    },
-    {
-      name: "EE_2020",
-      date: 12.011,
-      textQuantity: 21,
-      density: 11.5,
-      diversity: 32.1,
-    },
-    {
-      name: "EE_2019",
-      date: 12.011,
-      textQuantity: 21,
-      density: 11.5,
-      diversity: 32.1,
-    },
-    {
-      name: "EE_2018",
-      date: 12.011,
-      textQuantity: 21,
-      density: 11.5,
-      diversity: 32.1,
-    },
-    {
-      name: "EE_2017",
-      date: 12.011,
-      textQuantity: 21,
-      density: 11.5,
-      diversity: 32.1,
-    },
-  ];
+  // const { mutate } = useMutation(deleteCollection, {
+  //   onSuccess: (data: any) => {
+  //     queryClient.invalidateQueries(['collectionData'])
+  //   },
+  // })
 
-  const rows = elements.map((element) => (
+  const onDelete = () => {
+    // mutate()
+  }
+
+  const rows = data?.collections?.map((element) => (
     <tr key={element.name}>
-      <td>
-        <Anchor className={classes.anchor}>{element.name}</Anchor>
-      </td>
-      <td>{element.date}</td>
-      <td>{element.textQuantity}</td>
-      <td>{element.density}</td>
-      <td>{element.diversity}</td>
+      <td> {element.name}</td>
+      <td>{element.description}</td>
+      <td>{element?.created_at ? element.created_at.split(' ')[0] : '-'}</td>
       <td>
         <Group>
-          <Anchor className={classes.icons}>
-            <Icon icon="material-symbols:edit-square-rounded" />
-          </Anchor>
-          <Anchor className={classes.icons}>
+          <Button
+            variant="subtle"
+            className={classes.iconView}
+            //onClick={onDelete}
+          >
+            <Icon icon="mdi:eye" />
+          </Button>
+          <Button
+            variant="subtle"
+            className={classes.iconReport}
+            //onClick={onDelete}
+          >
+            <Icon icon="mdi:file-report" />
+          </Button>
+          <Button
+            variant="subtle"
+            className={classes.iconDelete}
+            onClick={onDelete}
+          >
             <Icon icon="material-symbols:delete-forever" />
-          </Anchor>
+          </Button>
         </Group>
       </td>
     </tr>
-  ));
+  ))
 
   return (
     <Box className={classes.boxTable}>
-      <Table striped className={classes.table}>
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>Data</th>
-            <th>Q. de textos</th>
-            <th>Densidade (Média)</th>
-            <th>Diversidade (Média)</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </Table>
+      {!isLoading && (
+        <Table striped className={classes.table}>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Descrição</th>
+              <th>Data</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>{rows}</tbody>
+        </Table>
+      )}
+      {isLoading && <Loader />}
     </Box>
-  );
+  )
 }

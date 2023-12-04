@@ -1,75 +1,103 @@
 import {
   Anchor,
+  Box,
   Button,
   Group,
   Stack,
   Text,
   TextInput,
   Textarea,
-} from "@mantine/core";
-import useStyles from "./styles";
-import { Icon } from "@iconify/react";
-import * as yup from "yup";
-import { useForm, yupResolver } from "@mantine/form";
+} from '@mantine/core'
+import useStyles from './styles'
+import { Icon } from '@iconify/react'
+import * as yup from 'yup'
+import { useForm, yupResolver } from '@mantine/form'
+import { useMutation, useQueryClient } from 'react-query'
+import { newCollection } from './CollectionModal.service'
 
 type Formtype = {
-  name: string;
-};
+  name: string
+}
 
-export default function CollectionModal() {
-  const { classes } = useStyles();
+interface CollectionModalProps {
+  onClose: () => void
+}
+
+export default function CollectionModal({ onClose }: CollectionModalProps) {
+  const { classes } = useStyles()
+  const queryClient = useQueryClient()
+  const userString: string | null = localStorage.getItem('@lexicanalytics:user')
+  const user = userString ? JSON.parse(userString) : null
+
+  const { isLoading, mutate, error } = useMutation(newCollection, {
+    onSuccess: (data: any) => {
+      queryClient.invalidateQueries(['collectionData'])
+      onClose()
+    },
+  })
 
   const formSchema = yup.object().shape({
-    name: yup.string().required("É preciso digitar um nome"),
-  });
+    name: yup.string().required('É preciso digitar um nome'),
+    description: yup.string().nullable(),
+  })
 
   const form = useForm({
     initialValues: {
-      name: "",
+      name: '',
+      description: '',
     },
 
     validateInputOnChange: true,
 
     validate: yupResolver(formSchema),
-  });
+  })
 
-  const onFinish = (values: Formtype) => {
-    console.log(values);
-  };
+  const onFinish = () => {
+    const { name, description } = form.values
+    const { hasErrors } = form.validate()
+    if (!hasErrors) {
+      mutate({
+        name,
+        description,
+        user_id: user.id,
+      })
+    }
+  }
   return (
     <>
       <Stack className={classes.stack}>
         <Text
           variant="gradient"
-          gradient={{ from: "indigo", to: "cyan", deg: 45 }}
+          gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
           className={classes.title}
         >
           Criar uma nova coleção
         </Text>
-        <form
-          className={classes.form}
-          onSubmit={form.onSubmit((values) => onFinish(values))}
-        >
+        <Box className={classes.form}>
           <TextInput
             className={classes.input}
             withAsterisk
             label="Nome"
             placeholder="Nome da coleção"
-            {...form.getInputProps("name")}
+            {...form.getInputProps('name')}
           />
           <Textarea
             className={classes.descriptionInput}
             label="Descrição"
             placeholder="Descreva algo sobre a coleção"
-            {...form.getInputProps("description")}
+            {...form.getInputProps('description')}
           />
           <Group position="center">
-            <Button className={classes.button} type="submit">
+            <Button
+              className={classes.button}
+              onClick={onFinish}
+              loading={isLoading}
+            >
               Criar
             </Button>
           </Group>
-        </form>
+        </Box>
       </Stack>
     </>
-  );
+  )
 }

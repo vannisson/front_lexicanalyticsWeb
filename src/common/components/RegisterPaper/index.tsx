@@ -8,57 +8,63 @@ import {
   Group,
   Anchor,
   PasswordInput,
-} from "@mantine/core";
-import { useForm, yupResolver } from "@mantine/form";
-import useStyles from "./styles";
-import * as yup from "yup";
-import { useState } from "react";
-import ErrorMessage from "../ErrorMessage";
-import { useNavigate } from "react-router-dom";
+  Select,
+} from '@mantine/core'
+import { useForm, yupResolver } from '@mantine/form'
+import useStyles from './styles'
+import * as yup from 'yup'
+import { useState } from 'react'
+import ErrorMessage from '../ErrorMessage'
+import { useNavigate } from 'react-router-dom'
+import { useMutation } from 'react-query'
+import { RegisterSchema, RegisterSchemaInitialValues } from './schema'
+import { register } from './Register.service'
 
 type Formtype = {
-  name: string;
-  email: string;
-  password: string;
-};
+  name: string
+  email: string
+  password: string
+}
 
 export default function RegisterPaper() {
-  const { classes } = useStyles();
-  const navigate = useNavigate();
+  const { classes } = useStyles()
+  const navigate = useNavigate()
 
-  const [error, setError] = useState("");
-  //Email ou senha inválidos.
-  const formSchema = yup.object().shape({
-    name: yup.string().required("É preciso digitar um nome"),
-    email: yup
-      .string()
-      .email("É preciso ser um email válido")
-      .required("É preciso digitar um email"),
-    password: yup
-      .string()
-      .min(8, "A senha precisar ter no mínimo 8 caracteres")
-      .max(32)
-      .required("É preciso digitar uma senha"),
-    confirmPassword: yup
-      .string()
-      .oneOf([yup.ref("password")], "As senhas não estão iguais"),
-  });
+  const { isLoading, mutate, error } = useMutation(register, {
+    onSuccess: (data: any) => {
+      navigate('/login')
+    },
+  })
+
+  const err = error as any
 
   const form = useForm({
-    initialValues: {
-      name: "",
-      email: "",
-      password: "",
-    },
-
+    validate: yupResolver(RegisterSchema),
+    initialValues: RegisterSchemaInitialValues,
     validateInputOnChange: true,
+  })
 
-    validate: yupResolver(formSchema),
-  });
+  const onSubmit = () => {
+    const { hasErrors } = form.validate()
+
+    if (hasErrors) return
+
+    const dataToSend = {
+      name: form.values.name,
+      email: form.values.email,
+      password: form.values.password,
+      confirmPassword: form.values.confirmPassword,
+      city: form.values.city,
+      state: form.values.state,
+      country: form.values.country,
+    }
+    console.log(dataToSend)
+    mutate(dataToSend)
+  }
 
   const onFinish = (values: Formtype) => {
-    console.log(values);
-  };
+    console.log(values)
+  }
 
   return (
     <Box className={classes.box}>
@@ -67,29 +73,26 @@ export default function RegisterPaper() {
           <Stack className={classes.textStack}>
             <Text
               variant="gradient"
-              gradient={{ from: "indigo", to: "cyan", deg: 45 }}
+              gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
               className={classes.title}
             >
               Bem-Vindo!
             </Text>
             <Text
               variant="gradient"
-              gradient={{ from: "indigo", to: "cyan", deg: 45 }}
+              gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
               className={classes.text}
             >
               Realize o cadastro
             </Text>
           </Stack>
-          <form
-            className={classes.form}
-            onSubmit={form.onSubmit((values) => onFinish(values))}
-          >
+          <Box className={classes.form}>
             <TextInput
               className={classes.input}
               withAsterisk
               label="Nome"
               placeholder="Seu Nome"
-              {...form.getInputProps("name")}
+              {...form.getInputProps('name')}
             />
 
             <TextInput
@@ -97,15 +100,42 @@ export default function RegisterPaper() {
               withAsterisk
               label="Email"
               placeholder="exemplo@email.com"
-              {...form.getInputProps("email")}
+              {...form.getInputProps('email')}
             />
+
+            <Box className={classes.selectContainer}>
+              <Select
+                className={classes.input}
+                label="País"
+                placeholder="-"
+                data={['Brasil', 'Portugal']}
+                required
+                {...form.getInputProps('country')}
+              />
+              <Select
+                className={classes.input}
+                label="Estado"
+                placeholder="-"
+                data={['Alagoas', 'São Paulo']}
+                required
+                {...form.getInputProps('state')}
+              />
+              <Select
+                className={classes.input}
+                label="Cidade"
+                placeholder="-"
+                data={['Arapiraca', 'Maceió']}
+                required
+                {...form.getInputProps('city')}
+              />
+            </Box>
 
             <PasswordInput
               className={classes.input}
               withAsterisk
               label="Senha"
               placeholder="********"
-              {...form.getInputProps("password")}
+              {...form.getInputProps('password')}
             />
 
             <PasswordInput
@@ -113,20 +143,20 @@ export default function RegisterPaper() {
               withAsterisk
               label="Confirmar Senha"
               placeholder="********"
-              {...form.getInputProps("confirmPassword")}
+              {...form.getInputProps('confirmPassword')}
             />
 
-            {error?.trim()?.length > 0 ? <ErrorMessage text={error} /> : null}
+            {/* {error?.trim()?.length > 0 ? <ErrorMessage text={error} /> : null} */}
 
-            <Button className={classes.button} type="submit">
+            <Button className={classes.button} onClick={onSubmit}>
               Cadastrar
             </Button>
-          </form>
+          </Box>
           <Anchor className={classes.text} href="">
             <Text
               variant="gradient"
-              gradient={{ from: "indigo", to: "cyan", deg: 45 }}
-              onClick={() => navigate("/login")}
+              gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
+              onClick={() => navigate('/login')}
             >
               Voltar
             </Text>
@@ -134,5 +164,5 @@ export default function RegisterPaper() {
         </Stack>
       </Paper>
     </Box>
-  );
+  )
 }

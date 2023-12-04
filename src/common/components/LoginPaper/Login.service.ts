@@ -1,17 +1,23 @@
-import { ApiService } from "../../../config/api";
+import axios from 'axios'
+import { ApiService } from '../../../config/api'
+import baseURL from '../../../config/baseURL'
 
 interface UserType {
-  login: string;
-  password: string;
+  email: string
+  password: string
 }
 
 export const login = async (data: UserType) => {
-  const api = new ApiService();
+  const formData = new FormData()
+  formData.append('email', data.email)
+  formData.append('password', data.password)
 
-  return await api.RequestData("POST", "/auth", data);
-};
+  return await axios.post(`${baseURL.baseURLDev}/auth`, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  })
+}
 
 export const loginSuccess = (data: any) => {
-  localStorage.setItem("@iCer:token", data?.token);
-  localStorage.setItem("@iCer:user", JSON.stringify(data?.user));
-};
+  //localStorage.setItem("@lexicanalytics:token", data?.token);
+  localStorage.setItem('@lexicanalytics:user', JSON.stringify(data?.user))
+}

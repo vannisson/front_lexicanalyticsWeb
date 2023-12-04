@@ -53,7 +53,7 @@ const useStyles = createStyles((theme) => ({
   },
   group: {
     justifyContent: "space-between",
-    padding: "0 3rem",
+    padding: "0 1rem",
   },
 }));
 

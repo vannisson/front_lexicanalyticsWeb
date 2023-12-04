@@ -8,52 +8,52 @@ import {
   TextInput,
   Modal,
   Button,
-} from "@mantine/core";
-import { Icon } from "@iconify/react";
-import { useNavigate } from "react-router-dom";
-import { useForm, yupResolver } from "@mantine/form";
-import { useDisclosure } from "@mantine/hooks";
-import useStyles from "./style";
-import * as yup from "yup";
-import CollectionTable from "../../common/components/CollectionTable";
-import CollectionModal from "../../common/components/CollectionModal";
+} from '@mantine/core'
+import { Icon } from '@iconify/react'
+import { useNavigate } from 'react-router-dom'
+import { useForm, yupResolver } from '@mantine/form'
+import { useDisclosure } from '@mantine/hooks'
+import useStyles from './style'
+import * as yup from 'yup'
+import CollectionTable from '../../common/components/CollectionTable'
+import CollectionModal from '../../common/components/CollectionModal'
 
 type Formtype = {
-  searchWord: string;
-};
+  searchWord: string
+}
 
 export default function Collections() {
-  const { classes } = useStyles();
-  const navigate = useNavigate();
-  const [opened, { open, close }] = useDisclosure(false);
+  const { classes } = useStyles()
+  const navigate = useNavigate()
+  const [opened, { open, close }] = useDisclosure(false)
 
   const formSchema = yup.object().shape({
     searchWord: yup.string(),
-  });
+  })
 
   const form = useForm({
     initialValues: {
-      searchWord: "",
+      searchWord: '',
     },
 
     validateInputOnChange: true,
 
     validate: yupResolver(formSchema),
-  });
+  })
 
   const onFinish = (values: Formtype) => {
-    console.log(values);
-  };
+    console.log(values)
+  }
 
   return (
     <>
       <Modal opened={opened} onClose={close} centered>
-        <CollectionModal />
+        <CollectionModal onClose={close} />
       </Modal>
       <Stack className={classes.stack}>
         <Text
           variant="gradient"
-          gradient={{ from: "indigo", to: "cyan", deg: 45 }}
+          gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
           className={classes.title}
         >
           Minhas Coleções
@@ -64,7 +64,7 @@ export default function Collections() {
               <TextInput
                 withAsterisk
                 placeholder="Buscar"
-                {...form.getInputProps("searchWord")}
+                {...form.getInputProps('searchWord')}
               />
             </form>
             <Group className={classes.newCollection}>
@@ -82,5 +82,5 @@ export default function Collections() {
         </Box>
       </Stack>
     </>
-  );
+  )
 }

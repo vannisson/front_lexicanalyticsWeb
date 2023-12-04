@@ -26,9 +26,15 @@ const useStyles = createStyles((theme) => ({
       textDecoration: "none",
     },
   },
-  icons: {
+  iconDelete: {
     color: "red",
   },
+  iconReport: {
+    color: "green"
+  },
+  iconView: {
+    color: "blue"
+  }
 }));
 
 export default useStyles;
