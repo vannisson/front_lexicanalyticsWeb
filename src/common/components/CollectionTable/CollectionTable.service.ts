@@ -22,7 +22,9 @@ interface ReturnType {
   collections: CollectionType[]
   user: UserType
 }
-const userString: string | null = localStorage.getItem('@lexicanalytics:user')
+const userString: string | null | undefined = localStorage.getItem(
+  '@lexicanalytics:user'
+)
 const user = userString ? JSON.parse(userString) : null
 
 export const collectionTable = async (): Promise<ReturnType> => {
