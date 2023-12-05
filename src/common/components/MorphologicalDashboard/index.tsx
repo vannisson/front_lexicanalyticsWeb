@@ -229,7 +229,7 @@ export default function MorphologicalDashboard() {
             sx={{ width: '25%', marginLeft: 'auto', marginRight: 'auto' }}
           />
         </Stack>
-        <Tabs defaultValue="summary">
+        <Tabs variant="outline" defaultValue="summary">
           <Tabs.List>
             <Tabs.Tab value="text">Texto</Tabs.Tab>
             <Tabs.Tab value="summary">Sumário</Tabs.Tab>

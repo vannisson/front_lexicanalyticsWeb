@@ -25,7 +25,7 @@ ChartJS.register(ArcElement, Tooltip, Legend)
 export default function Results() {
   const { classes } = useStyles()
   const navigate = useNavigate()
-  const [activeTab, setActiveTab] = useState<string | null>('lexical')
+  const [activeTab, setActiveTab] = useState<string | null>('morphological')
 
   const data = {
     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
