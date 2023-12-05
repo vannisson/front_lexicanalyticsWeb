@@ -24,7 +24,7 @@ export default function MorphologicalDashboard() {
   const { classes } = useStyles()
 
   const barData = {
-    labels: ['Subs', 'Art', 'Adv', 'Pro', 'Ver', 'Outros'],
+    labels: ['T01', 'T02', 'T03', 'T04', 'T05', 'T06'],
     datasets: [
       {
         label: 'Esse Texto',
@@ -136,7 +136,7 @@ export default function MorphologicalDashboard() {
     datasets: [
       {
         label: 'Diversidade',
-        data: [1, 2, 3, 1],
+        data: [23, 57, 43, 78],
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
@@ -189,11 +189,11 @@ export default function MorphologicalDashboard() {
             sx={{ width: '25%', marginLeft: 'auto', marginRight: 'auto' }}
           />
         </Stack>
-        <Tabs defaultValue="summary">
+        <Tabs variant="outline" defaultValue="summary">
           <Tabs.List>
             <Tabs.Tab value="text">Texto</Tabs.Tab>
             <Tabs.Tab value="summary">Sumário</Tabs.Tab>
-            <Tabs.Tab value="detail">Detalhes</Tabs.Tab>
+            {/* <Tabs.Tab value="detail">Outras Métricas</Tabs.Tab> */}
           </Tabs.List>
 
           <Tabs.Panel value="text" pt="xs">
@@ -209,7 +209,7 @@ export default function MorphologicalDashboard() {
 
           <Tabs.Panel value="summary" pt="xs">
             <Grid sx={{ marginTop: '1rem' }}>
-              <Grid.Col span={3}>
+              <Grid.Col span={2}>
                 <Stack align="center" sx={{ gap: '2rem' }}>
                   <Text>Total de Palavras: 10</Text>
                   <Text>Vocabulário: 10</Text>
@@ -217,39 +217,23 @@ export default function MorphologicalDashboard() {
                   <Text>Densidade Lexical: 10</Text>
                 </Stack>
               </Grid.Col>
-              <Grid.Col span={3}>
-                <Stack align="center"></Stack>
-              </Grid.Col>
-              <Grid.Col span={6}>
+              <Grid.Col span={5}>
                 <Stack align="center">
+                  <Text>Densidade</Text>
+                  <Box>
+                    <Bar data={barData} />
+                  </Box>
+                </Stack>
+              </Grid.Col>
+              <Grid.Col span={5}>
+                <Stack align="center">
+                  <Text>Diversidade</Text>
                   <Box>
                     <Bar data={barData} />
                   </Box>
                 </Stack>
               </Grid.Col>
             </Grid>
-          </Tabs.Panel>
-
-          <Tabs.Panel value="detail" pt="xs">
-            <Stack>
-              <Select
-                label="Buscar uma palavra:"
-                placeholder="Digite uma palavra para buscar"
-                searchable
-                nothingFound="Não encontrado"
-                data={[]}
-              />
-              <Table className={classes.table} striped>
-                <thead>
-                  <tr>
-                    <th>Palavra</th>
-                    <th>Classificação</th>
-                    <th>Frequência</th>
-                  </tr>
-                </thead>
-                <tbody>{individualRows}</tbody>
-              </Table>
-            </Stack>
           </Tabs.Panel>
         </Tabs>
       </Stack>
