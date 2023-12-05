@@ -9,13 +9,10 @@ interface CollectionType {
 }
 
 interface UserType {
-  city: string
-  country: string
   created_at: string
   email: string
   id: string
   name: string
-  state: string
 }
 
 interface ReturnType {

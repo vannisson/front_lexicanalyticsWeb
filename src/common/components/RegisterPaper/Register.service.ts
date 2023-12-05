@@ -6,9 +6,6 @@ interface UserType {
   name: string
   email: string
   password: string
-  city: string
-  state: string
-  country: string
 }
 
 export const register = async (data: UserType) => {
@@ -16,9 +13,6 @@ export const register = async (data: UserType) => {
   formData.append('name', data.name)
   formData.append('email', data.email)
   formData.append('password', data.password)
-  formData.append('city', data.city)
-  formData.append('state', data.state)
-  formData.append('country', data.country)
 
   return await axios.post(`${baseURL.baseURLDev}/user`, formData, {
     headers: { 'Content-Type': 'multipart/form-data' },

@@ -12,12 +12,6 @@ const RegisterSchema = Yup.object().shape({
   confirmPassword: Yup.string()
     .required("É necessário preencher este campo.")
     .oneOf([Yup.ref('password')], 'As senhas devem ser iguais '),
-  city: Yup.string()
-    .required("É necessário preencher este campo."),
-  state: Yup.string()
-    .required("É necessário preencher este campo."),
-  country: Yup.string()
-    .required("É necessário preencher este campo.")
 });
 
 const RegisterSchemaInitialValues = {
@@ -25,9 +19,6 @@ const RegisterSchemaInitialValues = {
   email: "",
   password: "",
   confirmPassword: "",
-  city: "",
-  state: "",
-  country: "",
 };
 
 export { RegisterSchema, RegisterSchemaInitialValues };
