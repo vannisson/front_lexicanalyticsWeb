@@ -47,7 +47,7 @@ export default function Collections() {
 
   return (
     <>
-      <Modal opened={opened} onClose={close} withCloseButton={false} centered>
+      <Modal opened={opened} onClose={close} centered>
         <CollectionModal onClose={close} />
       </Modal>
       <Stack className={classes.stack}>
@@ -67,7 +67,6 @@ export default function Collections() {
                 {...form.getInputProps('searchWord')}
               />
             </form>
-            
             <Group className={classes.newCollection}>
               <Button onClick={open} className={classes.button}>
                 <Group className={classes.buttonGroup}>

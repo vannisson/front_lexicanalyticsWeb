@@ -1,16 +1,13 @@
-import { Anchor, Box, Button, Group, Loader, Table, Modal } from '@mantine/core'
+import { Anchor, Box, Button, Group, Loader, Table } from '@mantine/core'
 import useStyles from './styles'
 import { Icon } from '@iconify/react'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { collectionTable } from './CollectionTable.service'
-import { useDisclosure } from '@mantine/hooks'
-import DeleteModal from '../DeleteModal'
 
 export default function CollectionTable() {
   const { classes } = useStyles()
   // const queryClient = useQueryClient()
   const { isLoading, data, error } = useQuery('collectionData', collectionTable)
-  const [opened, { open, close }] = useDisclosure(false)
 
   // const { mutate } = useMutation(deleteCollection, {
   //   onSuccess: (data: any) => {
@@ -46,7 +43,7 @@ export default function CollectionTable() {
           <Button
             variant="subtle"
             className={classes.iconDelete}
-            onClick={open}
+            onClick={onDelete}
           >
             <Icon icon="material-symbols:delete-forever" />
           </Button>
@@ -56,10 +53,6 @@ export default function CollectionTable() {
   ))
 
   return (
-    <>
-    <Modal opened={opened} onClose={close} withCloseButton={false} centered>
-    <DeleteModal onClose={close} />
-    </Modal>
     <Box className={classes.boxTable}>
       {!isLoading && (
         <Table striped className={classes.table}>
@@ -76,6 +69,5 @@ export default function CollectionTable() {
       )}
       {isLoading && <Loader />}
     </Box>
-    </>
   )
 }
