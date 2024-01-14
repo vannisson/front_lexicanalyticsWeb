@@ -6,18 +6,18 @@ import { deleteCollection } from '../CollectionTable/CollectionTable.service'
 
 interface DeleteModalProps {
   onClose: () => void
-  onDelete: (collectionId: string) => void
-  collectionId: string
+  onDelete: (id: string) => void
+  id: string
 }
 export default function DeleteModal({
   onClose,
   onDelete,
-  collectionId,
+  id,
 }: DeleteModalProps) {
   const { classes } = useStyles()
 
   const handleDelete = () => {
-    onDelete(collectionId)
+    onDelete(id)
   }
 
   return (

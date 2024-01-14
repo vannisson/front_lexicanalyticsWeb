@@ -101,7 +101,7 @@ export default function CollectionTable() {
         <DeleteModal
           onClose={closeDeleteModal}
           onDelete={handleConfirmDelete}
-          collectionId={deleteTargetId ?? ''}
+          id={deleteTargetId ?? ''}
         />
       </Modal>
       <Modal opened={editModalOpened} onClose={closeEditModal} withCloseButton={false} centered>
