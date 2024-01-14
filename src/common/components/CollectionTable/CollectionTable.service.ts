@@ -30,12 +30,8 @@ export const collectionTable = async (): Promise<ReturnType> => {
   return (await api.RequestData('GET', `/user/${userId}`, {})) as ReturnType
 }
 
-export const deleteCollection = async (collectionId: string) => {
-  const api = new ApiService()
+// export const deleteCollection = async () => {
+//   const api = new ApiService()
 
-  return (await api.RequestData(
-    'DELETE',
-    `/collection/${collectionId}`,
-    {}
-  )) as any
-}
+//   return await api.RequestData('DELETE', `/collection/${}`, {})
+// }

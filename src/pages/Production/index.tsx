@@ -7,22 +7,15 @@ import {
   Text,
   TextInput,
   Textarea,
-} from '@mantine/core'
-import { useNavigate, useParams } from 'react-router-dom'
-import useStyles from './styles'
-import { Icon } from '@iconify/react'
-import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { getProductions } from './Production.service'
+} from "@mantine/core";
+import { useNavigate } from "react-router-dom";
+import useStyles from "./styles";
+import { Icon } from "@iconify/react";
 
 export default function Production() {
-  const { classes } = useStyles()
-  const navigate = useNavigate()
-  const { collectionId } = useParams()
-  const { isLoading, data, error } = useQuery('getProductions', () =>
-    getProductions(collectionId || '')
-  )
-  const queryClient = useQueryClient()
-  console.log(data)
+  const { classes } = useStyles();
+  const navigate = useNavigate();
+
   return (
     <Box className={classes.majorBox}>
       <Grid className={classes.majorGrid}>
@@ -43,7 +36,7 @@ export default function Production() {
         <Grid.Col span={4}>
           <Stack className={classes.buttonStack}>
             <Text className={classes.textProduction}>
-              Textos adicionados: {data?.productions.length}
+              5 textos já foram adicionados
             </Text>
             <Button disabled className={classes.button}>
               <Icon icon="ic:round-file-present" />
@@ -64,12 +57,12 @@ export default function Production() {
       <Stack>
         <Text
           variant="gradient"
-          gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
+          gradient={{ from: "indigo", to: "cyan", deg: 45 }}
           className={classes.titleProduction}
         >
           Textos Adicionados:
         </Text>
       </Stack>
     </Box>
-  )
+  );
 }
