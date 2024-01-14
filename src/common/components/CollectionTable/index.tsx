@@ -18,7 +18,7 @@ export default function CollectionTable() {
   const onDelete = () => {
     // mutate()
   }
-
+  console.log(data?.collections)
   const rows = data?.collections?.map((element) => (
     <tr key={element.name}>
       <td> {element.name}</td>

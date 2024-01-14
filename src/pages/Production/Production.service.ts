@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { ApiService } from '../../../config/api'
-import baseURL from '../../../config/baseURL'
+import { ApiService } from '../../config/api'
+import baseURL from '../../config/baseURL'
 
 interface UserType {
   name: string

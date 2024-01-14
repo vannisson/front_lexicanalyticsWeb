@@ -25,7 +25,8 @@ ChartJS.register(ArcElement, Tooltip, Legend)
 export default function Results() {
   const { classes } = useStyles()
   const navigate = useNavigate()
-  const [activeTab, setActiveTab] = useState<string | null>('morphological')
+  // const [activeTab, setActiveTab] = useState<string | null>('morphological')
+  const [activeTab, setActiveTab] = useState<string | null>('lexical')
 
   const data = {
     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
@@ -67,7 +68,7 @@ export default function Results() {
               gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
               className={classes.title}
             >
-              Morfologia
+              Classe Gramatical
             </Text>
           </Tabs.Tab>
           <Tabs.Tab value="lexical">
