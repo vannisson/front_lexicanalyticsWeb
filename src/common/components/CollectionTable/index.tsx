@@ -16,6 +16,8 @@ import { useDisclosure } from '@mantine/hooks'
 import { useNavigate } from 'react-router-dom'
 import DeleteModal from '../DeleteModal'
 import { useState } from 'react'
+import EditCollectionModal from '../EditCollectionModal'
+
 
 export default function CollectionTable() {
   const { classes } = useStyles()
@@ -23,14 +25,20 @@ export default function CollectionTable() {
   const { isLoading, data, error } = useQuery('collectionData', collectionTable)
   const { mutate: deleteProductMutate } = useMutation(deleteCollection)
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null)
-  const [opened, { open, close }] = useDisclosure(false)
+  const [editTargetId, setEditTargetId] = useState<string | null>(null)
+  const [deleteModalOpened, { open: openDeleteModal, close: closeDeleteModal }] = useDisclosure(false);
+  const [editModalOpened, { open: openEditModal, close: closeEditModal }] = useDisclosure(false);
   const queryClient = useQueryClient()
 
   const handleDelete = (collectionId: string) => () => {
     setDeleteTargetId(collectionId)
-    open()
+    openDeleteModal()
   }
 
+  const handleEdit = (collectionId: string) => () => {
+    setEditTargetId(collectionId)
+    openEditModal()
+  }
   const handleConfirmDelete = (collectionId: string) => {
     if (collectionId) {
       deleteProductMutate(collectionId?.trim() ?? '', {
@@ -68,7 +76,7 @@ export default function CollectionTable() {
             <Button
               variant="subtle"
               className={classes.iconReport}
-              //onClick={onDelete}
+              onClick={handleEdit(element.id)}
             >
               <Icon icon="bxs:edit" />
             </Button>
@@ -89,11 +97,17 @@ export default function CollectionTable() {
 
   return (
     <>
-      <Modal opened={opened} onClose={close} withCloseButton={false} centered>
+     <Modal opened={deleteModalOpened} onClose={closeDeleteModal} withCloseButton={false} centered>
         <DeleteModal
-          onClose={close}
+          onClose={closeDeleteModal}
           onDelete={handleConfirmDelete}
           collectionId={deleteTargetId ?? ''}
+        />
+      </Modal>
+      <Modal opened={editModalOpened} onClose={closeEditModal} withCloseButton={false} centered>
+        <EditCollectionModal
+          onClose={closeEditModal}
+          collectionId={editTargetId ?? ''}
         />
       </Modal>
       <Box className={classes.boxTable}>
