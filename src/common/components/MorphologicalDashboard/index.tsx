@@ -275,7 +275,7 @@ export default function MorphologicalDashboard() {
           </Tabs.Panel>
 
           <Tabs.Panel value="detail" pt="xs">
-            <Stack>
+            <Stack align="center" sx={{ gap: '2rem' }}>
               <Select
                 label="Buscar uma palavra:"
                 placeholder="Digite uma palavra para buscar"
@@ -283,6 +283,13 @@ export default function MorphologicalDashboard() {
                 nothingFound="Não encontrado"
                 data={[]}
               />
+              <Group sx={{ gap: '2rem' }}>
+                <Switch checked={true} label="Substantivos" />{' '}
+                <Switch checked={true} label="Verbos" />{' '}
+                <Switch checked={true} label="Artigos" />{' '}
+                <Switch checked={true} label="Advérbios" />{' '}
+                <Switch checked={true} label="Pronomes" />
+              </Group>
               <Table className={classes.table} striped>
                 <thead>
                   <tr>

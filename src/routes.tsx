@@ -1,25 +1,25 @@
-import Login from "./pages/Login";
-import "./index.css";
-import { createBrowserRouter } from "react-router-dom";
-import Collections from "./pages/Collections";
-import { Box } from "@mantine/core";
-import CustomHeader from "./common/components/CustomHeader";
-import Production from "./pages/Production";
-import Reports from "./pages/Reports";
-import Results from "./pages/Results";
-import Register from "./pages/Register";
+import Login from './pages/Login'
+import './index.css'
+import { createBrowserRouter } from 'react-router-dom'
+import Collections from './pages/Collections'
+import { Box } from '@mantine/core'
+import CustomHeader from './common/components/CustomHeader'
+import Production from './pages/Production'
+import Reports from './pages/Reports'
+import Results from './pages/Results'
+import Register from './pages/Register'
 
 const router = createBrowserRouter([
   {
-    path: "/login",
+    path: '/login',
     element: <Login />,
   },
   {
-    path: "/register",
+    path: '/register',
     element: <Register />,
   },
   {
-    path: "/collections",
+    path: '/collections',
     element: (
       <CustomHeader>
         <Collections />
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/production",
+    path: '/production/:collectionId',
     element: (
       <CustomHeader>
         <Production />
@@ -35,7 +35,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/reports",
+    path: '/reports',
     element: (
       <CustomHeader>
         <Reports />
@@ -43,13 +43,13 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/results",
+    path: '/results',
     element: (
       <CustomHeader>
         <Results />
       </CustomHeader>
     ),
   },
-]);
+])
 
-export default router;
+export default router

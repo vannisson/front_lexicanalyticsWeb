@@ -46,7 +46,7 @@ export default function RegisterPaper() {
 
   const onSubmit = () => {
     const { hasErrors } = form.validate()
-
+    console.log(form)
     if (hasErrors) return
 
     const dataToSend = {
@@ -54,9 +54,6 @@ export default function RegisterPaper() {
       email: form.values.email,
       password: form.values.password,
       confirmPassword: form.values.confirmPassword,
-      city: form.values.city,
-      state: form.values.state,
-      country: form.values.country,
     }
     console.log(dataToSend)
     mutate(dataToSend)
@@ -102,33 +99,6 @@ export default function RegisterPaper() {
               placeholder="exemplo@email.com"
               {...form.getInputProps('email')}
             />
-
-            <Box className={classes.selectContainer}>
-              <Select
-                className={classes.input}
-                label="País"
-                placeholder="-"
-                data={['Brasil', 'Portugal']}
-                required
-                {...form.getInputProps('country')}
-              />
-              <Select
-                className={classes.input}
-                label="Estado"
-                placeholder="-"
-                data={['Alagoas', 'São Paulo']}
-                required
-                {...form.getInputProps('state')}
-              />
-              <Select
-                className={classes.input}
-                label="Cidade"
-                placeholder="-"
-                data={['Arapiraca', 'Maceió']}
-                required
-                {...form.getInputProps('city')}
-              />
-            </Box>
 
             <PasswordInput
               className={classes.input}

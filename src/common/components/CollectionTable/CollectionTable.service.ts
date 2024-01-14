@@ -9,13 +9,10 @@ interface CollectionType {
 }
 
 interface UserType {
-  city: string
-  country: string
   created_at: string
   email: string
   id: string
   name: string
-  state: string
 }
 
 interface ReturnType {
@@ -33,8 +30,12 @@ export const collectionTable = async (): Promise<ReturnType> => {
   return (await api.RequestData('GET', `/user/${userId}`, {})) as ReturnType
 }
 
-// export const deleteCollection = async () => {
-//   const api = new ApiService()
-//   const userId = user.id
-//   return await api.RequestData('DELETE', `/collection/${}`, {})
-// }
+export const deleteCollection = async (collectionId: string) => {
+  const api = new ApiService()
+
+  return (await api.RequestData(
+    'DELETE',
+    `/collection/${collectionId}`,
+    {}
+  )) as any
+}
