@@ -7,7 +7,6 @@ import {
   Text,
   TextInput,
   Textarea,
-  Modal
 } from '@mantine/core'
 import useStyles from './styles'
 import { Icon } from '@iconify/react'
@@ -67,15 +66,13 @@ export default function CollectionModal({ onClose }: CollectionModalProps) {
   return (
     <>
       <Stack className={classes.stack}>
-        <Group className={classes.title} position='apart'>
         <Text
           variant="gradient"
           gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
+          className={classes.title}
         >
           Criar uma nova coleção
         </Text>
-        <Modal.CloseButton />
-        </Group>
         <Box className={classes.form}>
           <TextInput
             className={classes.input}
