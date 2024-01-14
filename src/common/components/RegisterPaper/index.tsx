@@ -46,7 +46,7 @@ export default function RegisterPaper() {
 
   const onSubmit = () => {
     const { hasErrors } = form.validate()
-
+    console.log(form)
     if (hasErrors) return
 
     const dataToSend = {
