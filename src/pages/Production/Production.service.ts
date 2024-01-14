@@ -1,4 +1,6 @@
+import axios from 'axios'
 import { ApiService } from '../../config/api'
+import baseURL from '../../config/baseURL'
 
 interface CollectionType {
   created_at: string
@@ -8,7 +10,7 @@ interface CollectionType {
   user_id: string
 }
 
-interface ProductionType {
+export interface ProductionType {
   created_at: string
   collection_id: string
   id: string
@@ -39,20 +41,20 @@ export const getProductions = async (
   )) as ReturnType
 }
 
-// export const newCollection = async (data: NewProductionType) => {
-//   const formData = new FormData()
-//   formData.append('text', data.text)
-//   formData.append('title', data.title)
-//   formData.append('collection_id', data.collection_id)
+export const newProduction = async (data: NewProductionType) => {
+  const formData = new FormData()
+  formData.append('text', data.text)
+  formData.append('title', data.title)
+  formData.append('collection_id', data.collection_id)
 
-//   const requestOptions: RequestInit = {
-//     method: 'POST',
-//     body: formData,
-//   }
+  const requestOptions: RequestInit = {
+    method: 'POST',
+    body: formData,
+  }
 
-//   return await axios.post(
-//     `${baseURL.baseURLDev}/collection`,
-//     requestOptions.body,
-//     { headers: { 'Content-Type': 'multipart/form-data' } }
-//   )
-// }
+  return await axios.post(
+    `${baseURL.baseURLDev}/production`,
+    requestOptions.body,
+    { headers: { 'Content-Type': 'multipart/form-data' } }
+  )
+}
