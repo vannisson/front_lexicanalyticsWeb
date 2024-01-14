@@ -47,7 +47,7 @@ export default function Collections() {
 
   return (
     <>
-      <Modal opened={opened} onClose={close} centered>
+      <Modal opened={opened} onClose={close} withCloseButton={false} centered>
         <CollectionModal onClose={close} />
       </Modal>
       <Stack className={classes.stack}>

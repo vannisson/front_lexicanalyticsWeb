@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   Group,
+  Modal,
   Stack,
   Text,
   TextInput,
@@ -66,13 +67,15 @@ export default function CollectionModal({ onClose }: CollectionModalProps) {
   return (
     <>
       <Stack className={classes.stack}>
-        <Text
-          variant="gradient"
-          gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
-          className={classes.title}
-        >
-          Criar uma nova coleção
-        </Text>
+        <Group className={classes.title} position="apart">
+          <Text
+            variant="gradient"
+            gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
+          >
+            Criar uma nova coleção
+          </Text>
+          <Modal.CloseButton />
+        </Group>
         <Box className={classes.form}>
           <TextInput
             className={classes.input}
