@@ -18,7 +18,6 @@ import DeleteModal from '../DeleteModal'
 import { useState } from 'react'
 import EditCollectionModal from '../EditCollectionModal'
 
-
 export default function CollectionTable() {
   const { classes } = useStyles()
   const navigate = useNavigate()
@@ -26,8 +25,12 @@ export default function CollectionTable() {
   const { mutate: deleteProductMutate } = useMutation(deleteCollection)
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null)
   const [editTargetId, setEditTargetId] = useState<string | null>(null)
-  const [deleteModalOpened, { open: openDeleteModal, close: closeDeleteModal }] = useDisclosure(false);
-  const [editModalOpened, { open: openEditModal, close: closeEditModal }] = useDisclosure(false);
+  const [
+    deleteModalOpened,
+    { open: openDeleteModal, close: closeDeleteModal },
+  ] = useDisclosure(false)
+  const [editModalOpened, { open: openEditModal, close: closeEditModal }] =
+    useDisclosure(false)
   const queryClient = useQueryClient()
 
   const handleDelete = (collectionId: string) => () => {
@@ -39,6 +42,7 @@ export default function CollectionTable() {
     setEditTargetId(collectionId)
     openEditModal()
   }
+
   const handleConfirmDelete = (collectionId: string) => {
     if (collectionId) {
       deleteProductMutate(collectionId?.trim() ?? '', {
@@ -55,7 +59,6 @@ export default function CollectionTable() {
     navigate(`/production/${collectionId}`)
   }
 
-  console.log(data?.collections)
   const rows = data?.collections?.map((element) => (
     <tr key={element.name}>
       <td> {element.name}</td>
@@ -72,7 +75,7 @@ export default function CollectionTable() {
               <Icon icon="clarity:plus-circle-solid" />
             </Button>
           </Tooltip>
-          <Tooltip label="Editar Nome" withArrow>
+          <Tooltip label="Editar" withArrow>
             <Button
               variant="subtle"
               className={classes.iconReport}
@@ -81,7 +84,7 @@ export default function CollectionTable() {
               <Icon icon="bxs:edit" />
             </Button>
           </Tooltip>
-          <Tooltip label="Deletar Coleção" withArrow>
+          <Tooltip label="Deletar" withArrow>
             <Button
               variant="subtle"
               className={classes.iconDelete}
@@ -97,18 +100,25 @@ export default function CollectionTable() {
 
   return (
     <>
-     <Modal opened={deleteModalOpened} onClose={closeDeleteModal} withCloseButton={false} centered>
+      <Modal
+        opened={deleteModalOpened}
+        onClose={closeDeleteModal}
+        withCloseButton={false}
+        centered
+      >
         <DeleteModal
           onClose={closeDeleteModal}
           onDelete={handleConfirmDelete}
           id={deleteTargetId ?? ''}
         />
       </Modal>
-      <Modal opened={editModalOpened} onClose={closeEditModal} withCloseButton={false} centered>
-        <EditCollectionModal
-          onClose={closeEditModal}
-          collectionId={editTargetId ?? ''}
-        />
+      <Modal
+        opened={editModalOpened}
+        onClose={closeEditModal}
+        withCloseButton={false}
+        centered
+      >
+        <EditCollectionModal onClose={closeEditModal} id={editTargetId ?? ''} />
       </Modal>
       <Box className={classes.boxTable}>
         {!isLoading && (

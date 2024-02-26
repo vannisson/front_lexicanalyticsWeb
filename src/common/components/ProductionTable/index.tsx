@@ -87,8 +87,8 @@ export default function ProductionTable({ collectionData }: ProductionProps) {
         <Table striped className={classes.table}>
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Título</th>
+              <th>Ordem</th>
+              <th>Identificador</th>
               <th>Ações</th>
             </tr>
           </thead>

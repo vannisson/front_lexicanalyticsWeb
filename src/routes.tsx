@@ -43,7 +43,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: '/results',
+    path: '/results/:collectionId',
     element: (
       <CustomHeader>
         <Results />

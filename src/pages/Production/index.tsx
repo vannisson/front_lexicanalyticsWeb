@@ -70,6 +70,10 @@ export default function Production() {
     }
   }
 
+  const handleResults = (collectionId: string) => () => {
+    navigate(`/results/${collectionId}`)
+  }
+
   return (
     <Stack>
       <Box className={classes.majorBox}>
@@ -78,13 +82,13 @@ export default function Production() {
             <Stack className={classes.inputStack}>
               <TextInput
                 className={classes.textInput}
-                label="Título:"
-                placeholder="Insira um título (Opcional)"
+                label="Identificador do Texto:"
+                placeholder="Insira um identificador (Opcional)"
                 {...form.getInputProps('title')}
               ></TextInput>
               <Textarea
                 className={classes.textArea}
-                label="Texto:"
+                label="Texto Completo:"
                 placeholder="Insira o texto"
                 {...form.getInputProps('text')}
               ></Textarea>
@@ -103,7 +107,10 @@ export default function Production() {
                 <Icon icon="clarity:plus-circle-solid" />
                 <Text>Adicionar Texto</Text>
               </Button>
-              <Button className={classes.button}>
+              <Button
+                className={classes.button}
+                onClick={handleResults(collectionId || '')}
+              >
                 <Icon icon="teenyicons:pie-chart-solid" />
                 <Text>Obter Resultados</Text>
               </Button>

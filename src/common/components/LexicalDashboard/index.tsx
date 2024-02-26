@@ -86,8 +86,8 @@ export default function MorphologicalDashboard() {
     },
   ]
 
-  const rows = elements.map((element) => (
-    <tr key={element.gramaticalClass}>
+  const rows = elements.map((element, index) => (
+    <tr key={index}>
       <td> {element.gramaticalClass}</td>
       <td>{element.mean}</td>
       <td>{element.median}</td>
@@ -98,8 +98,8 @@ export default function MorphologicalDashboard() {
     </tr>
   ))
 
-  const individualRows = individualElements.map((element) => (
-    <tr key={element.word}>
+  const individualRows = individualElements.map((element, index) => (
+    <tr key={index}>
       <td> {element.word}</td>
       <td>{element.classification}</td>
       <td>{element.frequency}</td>

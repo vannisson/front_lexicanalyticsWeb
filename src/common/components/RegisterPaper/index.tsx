@@ -46,7 +46,6 @@ export default function RegisterPaper() {
 
   const onSubmit = () => {
     const { hasErrors } = form.validate()
-    console.log(form)
     if (hasErrors) return
 
     const dataToSend = {
@@ -55,12 +54,7 @@ export default function RegisterPaper() {
       password: form.values.password,
       confirmPassword: form.values.confirmPassword,
     }
-    console.log(dataToSend)
     mutate(dataToSend)
-  }
-
-  const onFinish = (values: Formtype) => {
-    console.log(values)
   }
 
   return (
