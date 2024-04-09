@@ -13,194 +13,199 @@ import {
   Textarea,
   Switch,
   Tabs,
+  Divider,
+  Flex,
 } from '@mantine/core'
 import useStyles from './styles'
 import { Icon } from '@iconify/react'
-import ReactWordcloud from 'react-wordcloud'
-import { Bar, Pie } from 'react-chartjs-2'
+import Chart from 'react-apexcharts';
+import {
+  flexRender,
+  MRT_GlobalFilterTextInput,
+  MRT_TablePagination,
+  MRT_ToolbarAlertBanner,
+  type MRT_ColumnDef,
+  useMantineReactTable,
+} from 'mantine-react-table';
 
-export default function MorphologicalDashboard() {
+import { useState } from 'react'
+interface MorphologicalDashboardProps {
+  morphData: any
+}
+
+interface DetailType {
+  word: string
+  tag: string,
+  occurrence: number,
+}
+
+export default function MorphologicalDashboard({ morphData }:MorphologicalDashboardProps) {
   const { classes } = useStyles()
+  const [selectedTextIndex, setSelectedTextIndex] = useState<number>(0);
 
-  const data = {
-    labels: ['Subs', 'Art', 'Adv', 'Pro', 'Ver', 'Outros'],
-    datasets: [
+  const selectData = morphData?.single?.title.map((title: string, index: number) => ({
+    value: index.toString(),
+    label: title,
+  })) || [];
+  
+  const gramaticalClasses = [
+    { key: "subs", name: "Substantivos" },
+    { key: "verb", name: "Verbos" },
+    { key: "adj", name: "Adjetivos" },
+    { key: "adv", name: "Advérbios" },
+    { key: "art", name: "Artigos" },
+    { key: "pro", name: "Pronomes" },
+    { key: "others", name: "Outros" },
+  ];
+
+  const statTypes = [
+    "mean",
+    "median",
+    // "mode", 
+    "standard_deviation",
+    "minimum",
+    "maximum"
+  ];
+
+  const formatNumber = (number: number) => {
+    if (typeof number === 'number') {
+      return number.toFixed(2);
+    }
+    return '';
+  };
+
+  const renderRows = () => {
+    if (!morphData) return null;
+    return gramaticalClasses.map((gramaticalClass, index) => (
+      <tr key={index}>
+        <td style={{ fontWeight: 'bold' }}>{gramaticalClass.name}</td>
+        {statTypes.map((statType) => (
+          <td key={statType}>{formatNumber(morphData.general.tokens[statType][gramaticalClass.key])}</td>
+        ))}
+      </tr>
+    ));
+  };
+
+  const handleSelectChange = (value: string) => {
+    setSelectedTextIndex(parseInt(value));
+  };
+
+  const getTextValue = () => {
+    if (!morphData || !morphData.single || !morphData.single.text) return '';
+    return morphData.single.text[selectedTextIndex] || '';
+  };
+
+  const getTokenValue = (tokenClass: string) => {
+    if (!morphData || !morphData.single) return '';
+    return parseInt(morphData.single.tokens_count[selectedTextIndex][tokenClass] || '');
+  };
+
+  const getTypeValue = (typeClass: string) => {
+    if (!morphData || !morphData.single) return '';
+    return parseInt(morphData.single.types_count[selectedTextIndex][typeClass]|| '');
+  };
+
+  // const getCurrentDetail = () => {
+  //   if (!data || !data.single) return '';
+  //   return formatNumber(data.single.tagged_words[selectedTextIndex]|| '');
+  // };
+
+  const chartData = [
+    {
+      name: 'Tokens',
+      data: [
+        parseFloat(getTokenValue('subs')),
+        parseFloat(getTokenValue('verb')),
+        parseFloat(getTokenValue('adj')),
+        parseFloat(getTokenValue('adv')),
+        parseFloat(getTokenValue('pro')),
+        parseFloat(getTokenValue('art')),
+        parseFloat(getTokenValue('others'))
+      ],
+    },
+    {
+      name: 'Types',
+      data: [
+        parseFloat(getTypeValue('subs')),
+        parseFloat(getTypeValue('verb')),
+        parseFloat(getTypeValue('adj')),
+        parseFloat(getTypeValue('adv')),
+        parseFloat(getTypeValue('pro')),
+        parseFloat(getTypeValue('art')),
+        parseFloat(getTypeValue('others'))
+      ],
+    }
+  ];
+
+  const options = {
+    stroke: {
+      width: 2
+    },
+    fill: {
+      opacity: 0.1
+    },
+    xaxis: {
+      categories: ['Substantivos', 'Verbos', 'Adjetivos', 'Advérbios', 'Pronomes', 'Artigos', 'Outros']
+    },
+    yaxis: {
+      show: false
+    },
+    legend: {
+    show: true
+  }
+  };
+
+  const data: DetailType[] = morphData?.single?.countWordOccurrencesWithTag[selectedTextIndex] || []
+  console.log(data)
+
+  const columns: MRT_ColumnDef[] = [
+  {
+    accessorKey: 'word',
+    header: 'Palavra',
+    enableSorting: true
+  },
+  {
+    accessorKey: 'tag',
+    header: 'Classificação',
+  },
+  {
+    accessorKey: 'occurrence',
+    header: 'Ocorrência',
+  },
+];
+
+
+  const table = useMantineReactTable({
+    columns,
+    data,
+    enableRowSelection: false,
+    initialState: {
+      pagination: { pageSize: 10, pageIndex: 0 },
+      showGlobalFilter: true,
+      sorting: [
       {
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-        ],
-        borderWidth: 1,
+        id: 'word',
+        desc: false,
       },
     ],
-  }
-
-  const barData = {
-    labels: ['Subs', 'Art', 'Adv', 'Pro', 'Ver', 'Outros'],
-    datasets: [
-      {
-        label: 'Esse Texto',
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: ['rgba(255, 99, 132, 0.2)'],
-        borderColor: ['rgba(255, 99, 132, 1)'],
-        borderWidth: 1,
-      },
-      {
-        label: 'Geral',
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: ['rgba(54, 162, 235, 0.2)'],
-        borderColor: ['rgba(54, 162, 235, 1)'],
-        borderWidth: 1,
-      },
-    ],
-  }
-  const elements = [
-    {
-      gramaticalClass: 'Substantivos',
-      mean: 8.0,
-      median: 8.0,
-      mode: 6,
-      standardDeviation: 2.0,
-      min: '6(T1)',
-      max: '10(T2)',
     },
-    {
-      gramaticalClass: 'Verbos',
-      mean: 8.0,
-      median: 8.0,
-      mode: 6,
-      standardDeviation: 2.0,
-      min: '6(T1)',
-      max: '10(T2)',
+    localization: {
+    search: "Buscar",
+    rowsPerPage: 'Linhas por página',
     },
-    {
-      gramaticalClass: 'Adjetivos',
-      mean: 8.0,
-      median: 8.0,
-      mode: 6,
-      standardDeviation: 2.0,
-      min: '6(T1)',
-      max: '10(T2)',
+    mantinePaginationProps: {
+      rowsPerPageOptions: ['5', '10', '15'],
     },
-    {
-      gramaticalClass: 'Advérbios',
-      mean: 8.0,
-      median: 8.0,
-      mode: 6,
-      standardDeviation: 2.0,
-      min: '6(T1)',
-      max: '10(T2)',
-    },
-    {
-      gramaticalClass: 'Pronomes',
-      mean: 8.0,
-      median: 8.0,
-      mode: 6,
-      standardDeviation: 2.0,
-      min: '6(T1)',
-      max: '10(T2)',
-    },
-    {
-      gramaticalClass: 'Artigos',
-      mean: 8.0,
-      median: 8.0,
-      mode: 6,
-      standardDeviation: 2.0,
-      min: '6(T1)',
-      max: '10(T2)',
-    },
-    {
-      gramaticalClass: 'Numerais',
-      mean: 8.0,
-      median: 8.0,
-      mode: 6,
-      standardDeviation: 2.0,
-      min: '6(T1)',
-      max: '10(T2)',
-    },
-  ]
-
-  const individualElements = [
-    {
-      word: 'Rebeca',
-      classification: 'Substantivo',
-      frequency: 3,
-    },
-    {
-      word: 'Rebeca',
-      classification: 'Substantivo',
-      frequency: 3,
-    },
-    {
-      word: 'Rebeca',
-      classification: 'Substantivo',
-      frequency: 3,
-    },
-    {
-      word: 'Rebeca',
-      classification: 'Substantivo',
-      frequency: 3,
-    },
-  ]
-
-  const rows = elements.map((element) => (
-    <tr key={element.gramaticalClass}>
-      <td> {element.gramaticalClass}</td>
-      <td>{element.mean}</td>
-      <td>{element.median}</td>
-      <td>{element.mode}</td>
-      <td>{element.standardDeviation}</td>
-      <td>{element.min}</td>
-      <td>{element.max}</td>
-    </tr>
-  ))
-
-  const individualRows = individualElements.map((element) => (
-    <tr key={element.word}>
-      <td> {element.word}</td>
-      <td>{element.classification}</td>
-      <td>{element.frequency}</td>
-    </tr>
-  ))
-
-  const selectData = [
-    { value: '0', label: 'T01' },
-    { value: '1', label: 'T02' },
-    { value: '2', label: 'T03' },
-    { value: '3', label: 'T04' },
-    { value: '4', label: 'T05' },
-  ]
-  const text =
-    'A lebre a tartaruga A lebre vivia zombando da tartaruga, porque ela andava muito devagar. Um dia, cansada das humilhações da lebre, a tartaruga propôs-lhe uma corrida entre as duas. A lebre achou a ideia ridícula, porque tinha a certeza que ganharia, e aceitou o desafio rindo: — Aceito o desafio, lebre. Com essa, vou me divertir ainda mais da sua lerdeza. A tartaruga sabia que tinha que se esforçar muito para ganhar a lebre, por isso, imediatamente começou a fazer o seu percurso. Enquanto isso, a lebre rindo e zombando dela, decidiu dormir um pouco depois de começar a correr. — Não sei para quê tanto esforço, tartaruga. Acha mesmo que precisa se cansar tanto? Olha, dá tempo de eu dormir antes. Acontece que a lebre pegou no sono e só acordou quando a tartaruga estava cruzando a linha da chegada. Ao vencer, a tartaruga disse: — Que vergonha, perder a corrida para uma tartaruga... Moral da história: é importante sermos humildes, aceitarmos os desafios de forma honesta, e também comprometida, e nunca dar algo por vencido antes de ter sido finalizado.'
+    paginationDisplayMode: 'pages',
+  });
   return (
     <>
       <Stack className={classes.generalStack}>
         <Stack align="center">
-          <Text>Resultado Geral</Text>
+          <Text className={classes.dashboardText}>Resultado Geral</Text>
         </Stack>
         <Grid>
-          <Grid.Col span={4}>
-            <Stack align="center">
-              {/* <Switch label="Somente itens lexicais" /> */}
-              <Box>
-                <Pie data={data} />
-              </Box>
-            </Stack>
-          </Grid.Col>
+          <Grid.Col span={2}></Grid.Col>
           <Grid.Col span={8}>
             <Stack align="center">
               <Table className={classes.table} striped>
@@ -209,27 +214,30 @@ export default function MorphologicalDashboard() {
                     <th>Classe Gramatical</th>
                     <th>Média</th>
                     <th>Mediana</th>
-                    <th>Moda</th>
+                    {/* <th>Moda</th> */}
                     <th>Desvio Padrão</th>
                     <th>Menor</th>
                     <th>Maior</th>
                   </tr>
                 </thead>
-                <tbody>{rows}</tbody>
+                <tbody>{renderRows()}</tbody>
               </Table>
             </Stack>
           </Grid.Col>
+          <Grid.Col span={2}></Grid.Col>
         </Grid>
         <Stack align="center">
-          <Text>Resultado Individual</Text>
+          <Text className={classes.dashboardText}>Resultado Individual</Text>
           <Select
+            value={selectedTextIndex.toString()} 
+            onChange={(value) => handleSelectChange(value as string)}
             data={selectData}
             label="Escolha um texto"
             maxDropdownHeight={160}
             sx={{ width: '25%', marginLeft: 'auto', marginRight: 'auto' }}
           />
         </Stack>
-        <Tabs variant="outline" defaultValue="summary">
+        <Tabs variant="outline" defaultValue="text" >
           <Tabs.List>
             <Tabs.Tab value="text">Texto</Tabs.Tab>
             <Tabs.Tab value="summary">Sumário</Tabs.Tab>
@@ -240,34 +248,54 @@ export default function MorphologicalDashboard() {
             <Stack align="center">
               <Textarea
                 sx={{ width: '80%' }}
-                placeholder={text}
+                placeholder={getTextValue()}
                 label="Corpo do Texto"
                 disabled
+                autosize
               />
             </Stack>
           </Tabs.Panel>
 
           <Tabs.Panel value="summary" pt="xs">
-            <Grid sx={{ marginTop: '1rem' }}>
+            <Grid sx={{ marginTop: '0.5rem' }}>
               <Grid.Col span={3}>
-                <Stack align="center" sx={{ gap: '2rem' }}>
-                  <Text>Total de Linhas: 10</Text>
-                  <Text>Total de Palavras: 10</Text>
-                  <Text>Vocabulário: 10</Text>
+                <Stack align='center' sx={{marginBottom: '1rem'}}>
+                  <Text sx={{fontSize: '1.2rem', fontWeight: 650,}}>Distribuição dos Tokens</Text>
+                </Stack>
+
+                <Stack align="center" sx={{ gap: '1.5rem' }}>
+                  <Text>Substantivos: {getTokenValue('subs')}</Text>
+                  <Text>Verbos: {getTokenValue('verb')}</Text>
+                  <Text>Adjetivos: {getTokenValue('adj')}</Text>
+                  <Text>Advérbios: {getTokenValue('adv')}</Text>
+                  <Text>Pronomes: {getTokenValue('pro')}</Text>
+                  <Text>Artigos: {getTokenValue('art')}</Text>
+                  <Text>Outros: {getTokenValue('others')}</Text>
                 </Stack>
               </Grid.Col>
+              <Divider size="sm" orientation="vertical" />
+
               <Grid.Col span={3}>
-                <Stack align="center">
-                  {/* <Switch label="Somente itens lexicais" /> */}
-                  <Box>
-                    <Pie data={data} />
-                  </Box>
+                <Stack align='center' sx={{marginBottom: '1rem'}}>
+                  <Text sx={{fontSize: '1.2rem', fontWeight: 650,}}>Distribuição dos Types</Text>
+                </Stack>
+
+                <Stack align="center" sx={{ gap: '1.5rem' }}>
+                  <Text>Substantivos: {getTypeValue('subs')}</Text>
+                  <Text>Verbos: {getTypeValue('verb')}</Text>
+                  <Text>Adjetivos: {getTypeValue('adj')}</Text>
+                  <Text>Advérbios: {getTypeValue('adv')}</Text>
+                  <Text>Pronomes: {getTypeValue('pro')}</Text>
+                  <Text>Artigos: {getTypeValue('art')}</Text>
+                  <Text>Outros: {getTypeValue('others')}</Text>
                 </Stack>
               </Grid.Col>
-              <Grid.Col span={6}>
+              <Divider size="sm" orientation="vertical" />
+              <Grid.Col span={5}>
                 <Stack align="center">
+                  <Text sx={{fontSize: '1.2rem', fontWeight: 650,}}>Comparativo Tokens vs. Types</Text>
                   <Box>
-                    <Bar data={barData} />
+                    <Chart options={options} series={chartData} type="radar" height="300"/>
                   </Box>
                 </Stack>
               </Grid.Col>
@@ -275,32 +303,54 @@ export default function MorphologicalDashboard() {
           </Tabs.Panel>
 
           <Tabs.Panel value="detail" pt="xs">
-            <Stack align="center" sx={{ gap: '2rem' }}>
-              <Select
-                label="Buscar uma palavra:"
-                placeholder="Digite uma palavra para buscar"
-                searchable
-                nothingFound="Não encontrado"
-                data={[]}
-              />
-              <Group sx={{ gap: '2rem' }}>
-                <Switch checked={true} label="Substantivos" />{' '}
-                <Switch checked={true} label="Verbos" />{' '}
-                <Switch checked={true} label="Artigos" />{' '}
-                <Switch checked={true} label="Advérbios" />{' '}
-                <Switch checked={true} label="Pronomes" />
-              </Group>
-              <Table className={classes.table} striped>
+             <Stack align="center" sx={{ gap: '2rem' }}>
+              <Flex justify="space-between" align="center">
+                <MRT_GlobalFilterTextInput table={table} />
+                <MRT_TablePagination table={table} />
+              </Flex>
+              <Table
+                  captionSide="top"
+                  fontSize="md"
+                  highlightOnHover
+                  horizontalSpacing="xl"
+                  striped
+                  verticalSpacing="xs"
+                  m="0"
+                >
                 <thead>
-                  <tr>
-                    <th>Palavra</th>
-                    <th>Classificação</th>
-                    <th>Frequência</th>
-                  </tr>
+                  {table.getHeaderGroups().map((headerGroup) => (
+                    <tr key={headerGroup.id}>
+                      {headerGroup.headers.map((header) => (
+                        <th key={header.id}>
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.Header ??
+                                  header.column.columnDef.header,
+                                header.getContext(),
+                              )}
+                        </th>
+                      ))}
+                    </tr>
+                  ))}
                 </thead>
-                <tbody>{individualRows}</tbody>
+                <tbody>
+                  {table.getRowModel().rows.map((row) => (
+                    <tr key={row.id}>
+                      {row.getVisibleCells().map((cell) => (
+                        <td key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.Cell ?? cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
               </Table>
-            </Stack>
+              <MRT_ToolbarAlertBanner stackAlertBanner table={table} />
+            </Stack> 
           </Tabs.Panel>
         </Tabs>
       </Stack>
