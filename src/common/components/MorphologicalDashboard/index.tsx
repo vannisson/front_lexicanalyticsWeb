@@ -18,8 +18,10 @@ import useStyles from './styles'
 import { Icon } from '@iconify/react'
 import ReactWordcloud from 'react-wordcloud'
 import { Bar, Pie } from 'react-chartjs-2'
-
-export default function MorphologicalDashboard() {
+interface MorphologicalDashboardProps {
+  data1: any
+}
+export default function MorphologicalDashboard({ data1 }:MorphologicalDashboardProps) {
   const { classes } = useStyles()
 
   const data = {

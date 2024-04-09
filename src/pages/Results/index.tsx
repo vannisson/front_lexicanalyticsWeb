@@ -30,9 +30,8 @@ export default function Results() {
   const { isLoading, data, error } = useQuery('resultsData', () =>
     getResults(collectionId || '')
   )
-  const [activeTab, setActiveTab] = useState<string | null>('morphological')
-  // const [activeTab, setActiveTab] = useState<string | null>('lexical')
-  console.log(data)
+  // const [activeTab, setActiveTab] = useState<string | null>('morphological')
+  const [activeTab, setActiveTab] = useState<string | null>('richness')
   return (
     <Box className={classes.box}>
       <Tabs w="80%" value={activeTab} onTabChange={setActiveTab}>
@@ -40,6 +39,15 @@ export default function Results() {
           sx={{ position: 'sticky', top: 0, backgroundColor: 'white' }}
           position="center"
         >
+          <Tabs.Tab value="richness">
+            <Text
+              variant="gradient"
+              gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
+              className={classes.title}
+            >
+              Riqueza Lexical
+            </Text>
+          </Tabs.Tab>
           <Tabs.Tab value="morphological">
             <Text
               variant="gradient"
@@ -49,23 +57,15 @@ export default function Results() {
               Classe Gramatical
             </Text>
           </Tabs.Tab>
-          <Tabs.Tab value="lexical">
-            <Text
-              variant="gradient"
-              gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
-              className={classes.title}
-            >
-              Riqueza Lexical
-            </Text>
-          </Tabs.Tab>
+          
         </Tabs.List>
 
         <Tabs.Panel value="morphological" pt="xs">
-          <MorphologicalDashboard />
+          <MorphologicalDashboard data1={data}/>
         </Tabs.Panel>
 
-        <Tabs.Panel value="lexical" pt="xs">
-          <LexicalDashboard />
+        <Tabs.Panel value="richness" pt="xs">
+          <LexicalDashboard data={data}/>
         </Tabs.Panel>
       </Tabs>
     </Box>
