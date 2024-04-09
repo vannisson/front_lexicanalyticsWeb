@@ -54,8 +54,8 @@ export default function LexicalDashboard({ data }:LexicalDashboardProps){
     if (typeof number === 'number') {
       return number.toFixed(2);
     }
-  return '';
-};
+    return '';
+  };
   
   const renderRows = () => {
     if (!data) return null;
@@ -188,8 +188,11 @@ export default function LexicalDashboard({ data }:LexicalDashboardProps){
           </Tabs.Panel>
 
           <Tabs.Panel value="summary" pt="xs">
-            <Grid sx={{ marginTop: '1rem' }}>
-              <Grid.Col span={4}>
+            <Grid sx={{ marginTop: '0.5rem' }}>
+              <Grid.Col span={3}>
+                <Stack align='center' sx={{marginBottom: '1rem'}}>
+                  <Text sx={{fontSize: '1.2rem', fontWeight: 650,}}>Características Lexicais</Text>
+                </Stack>
                 <Stack align="flex-start" sx={{ gap: '1.5rem' }}>
                   <Text>Número de Palavras: {getMetricValue('n_tokens')}</Text>
                   <Text>Vocabulário: {getMetricValue('n_types')}</Text>
@@ -198,17 +201,19 @@ export default function LexicalDashboard({ data }:LexicalDashboardProps){
                   <Text>Riqueza Lexical: {getMetricValue('richness')}</Text>
                 </Stack>
               </Grid.Col>
+              <Divider size="sm" orientation="vertical" />
               <Grid.Col span={4}>
                 <Stack align="center">
-                  <Text>Densidade</Text>
+                  <Text sx={{fontSize: '1.2rem', fontWeight: 650,}}>Densidade Lexical</Text>
                   <Box>
                     <Chart options={options} series={densityChart} type="bar" />
                   </Box>
                 </Stack>
               </Grid.Col>
+              <Divider size="sm" orientation="vertical" />
               <Grid.Col span={4}>
                 <Stack align="center">
-                  <Text>Diversidade</Text>
+                  <Text sx={{fontSize: '1.2rem', fontWeight: 650,}}>Diversidade Lexical</Text>
                   <Box>
                     <Chart options={options} series={diversityChart} type="bar" />
                   </Box>

@@ -51,7 +51,7 @@ export default function ProductionTable({ collectionData }: ProductionProps) {
       <td> {element.title}</td>
       <td>
         <Group>
-          <Tooltip label="Editar Nome" withArrow>
+          <Tooltip label="Editar Texto" withArrow>
             <Button
               variant="subtle"
               className={classes.iconReport}
@@ -60,7 +60,7 @@ export default function ProductionTable({ collectionData }: ProductionProps) {
               <Icon icon="bxs:edit" />
             </Button>
           </Tooltip>
-          <Tooltip label="Deletar Coleção" withArrow>
+          <Tooltip label="Deletar Texto" withArrow>
             <Button
               variant="subtle"
               className={classes.iconDelete}

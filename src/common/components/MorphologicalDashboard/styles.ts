@@ -4,6 +4,7 @@ const useStyles = createStyles((theme) => ({
   generalStack: {
     marginTop: '2rem',
     gap: '3rem',
+    marginBottom: '4rem'
   },
   sectionTitle: {
     marginLeft: 'auto',
@@ -31,6 +32,10 @@ const useStyles = createStyles((theme) => ({
     fontSize: '2rem',
   },
   table: {},
+  dashboardText:{
+    fontSize: '1.5rem',
+    fontWeight: 700,
+  }
 }))
 
 export default useStyles

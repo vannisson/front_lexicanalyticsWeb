@@ -42,7 +42,7 @@ interface GetReturnType {
   productions: ProductionType[]
 }
 
-const userString: string | null | undefined = localStorage.getItem(
+const userString: string | null | "" = localStorage.getItem(
   '@lexicanalytics:user'
 )
 const user = userString ? JSON.parse(userString) : null

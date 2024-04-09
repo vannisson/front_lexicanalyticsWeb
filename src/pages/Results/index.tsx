@@ -30,13 +30,14 @@ export default function Results() {
   const { isLoading, data, error } = useQuery('resultsData', () =>
     getResults(collectionId || '')
   )
-  // const [activeTab, setActiveTab] = useState<string | null>('morphological')
+
   const [activeTab, setActiveTab] = useState<string | null>('richness')
+
   return (
     <Box className={classes.box}>
       <Tabs w="80%" value={activeTab} onTabChange={setActiveTab}>
         <Tabs.List
-          sx={{ position: 'sticky', top: 0, backgroundColor: 'white' }}
+          sx={{ top: 0, backgroundColor: 'white', gap:"4rem" }}
           position="center"
         >
           <Tabs.Tab value="richness">
@@ -61,11 +62,19 @@ export default function Results() {
         </Tabs.List>
 
         <Tabs.Panel value="morphological" pt="xs">
-          <MorphologicalDashboard data1={data}/>
+          {isLoading ? (
+            <p>Loading data...</p>
+          ) : (
+            <MorphologicalDashboard morphData={data} />
+          )}
         </Tabs.Panel>
 
         <Tabs.Panel value="richness" pt="xs">
-          <LexicalDashboard data={data}/>
+          {isLoading ? (
+            <p>Loading data...</p>
+          ) : (
+            <LexicalDashboard data={data} />
+          )}
         </Tabs.Panel>
       </Tabs>
     </Box>
