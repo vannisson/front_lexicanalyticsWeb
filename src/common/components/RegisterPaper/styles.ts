@@ -53,7 +53,13 @@ const useStyles = createStyles((theme) => ({
   },
   group: {
     justifyContent: "space-between",
-    padding: "0 1rem",
+    padding: "0 3rem",
+  },
+   selectContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    gap: "2px",
+    width:"90%", 
   },
 }));
 

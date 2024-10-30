@@ -8,44 +8,51 @@ import {
   Group,
   Anchor,
   PasswordInput,
+  Select,
 } from '@mantine/core'
 import { useForm, yupResolver } from '@mantine/form'
 import useStyles from './styles'
 import * as yup from 'yup'
-import { useMutation } from 'react-query'
 import { useState } from 'react'
 import ErrorMessage from '../ErrorMessage'
 import { useNavigate } from 'react-router-dom'
-import { LoginSchema, LoginSchemaInitialValues } from './schema'
-import { login, loginSuccess } from './Login.service'
+import { useMutation } from 'react-query'
+import { RegisterSchema, RegisterSchemaInitialValues } from './schema'
+import { register } from './Register.service'
 
-export default function LoginPaper() {
+type Formtype = {
+  name: string
+  email: string
+  password: string
+}
+
+export default function RegisterPaper() {
   const { classes } = useStyles()
   const navigate = useNavigate()
 
-  const { isLoading, mutate, error } = useMutation(login, {
+  const { isLoading, mutate, error } = useMutation(register, {
     onSuccess: (data: any) => {
-      loginSuccess(data?.data)
-      navigate('/collections')
+      navigate('/')
     },
   })
 
   const err = error as any
 
   const form = useForm({
-    validate: yupResolver(LoginSchema),
-    initialValues: LoginSchemaInitialValues,
+    validate: yupResolver(RegisterSchema),
+    initialValues: RegisterSchemaInitialValues,
     validateInputOnChange: true,
   })
 
   const onSubmit = () => {
     const { hasErrors } = form.validate()
-
     if (hasErrors) return
 
     const dataToSend = {
+      name: form.values.name,
       email: form.values.email,
       password: form.values.password,
+      confirmPassword: form.values.confirmPassword,
     }
     mutate(dataToSend)
   }
@@ -67,10 +74,18 @@ export default function LoginPaper() {
               gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
               className={classes.text}
             >
-              Acesse a Ferramenta
+              Realize o cadastro
             </Text>
           </Stack>
           <Box className={classes.form}>
+            <TextInput
+              className={classes.input}
+              withAsterisk
+              label="Nome"
+              placeholder="Seu Nome"
+              {...form.getInputProps('name')}
+            />
+
             <TextInput
               className={classes.input}
               withAsterisk
@@ -87,39 +102,29 @@ export default function LoginPaper() {
               {...form.getInputProps('password')}
             />
 
-            {/* {err?.trim()?.length > 0 ? <ErrorMessage text={err} /> : null} */}
+            <PasswordInput
+              className={classes.input}
+              withAsterisk
+              label="Confirmar Senha"
+              placeholder="********"
+              {...form.getInputProps('confirmPassword')}
+            />
 
-            <Button
-              className={classes.button}
-              type="submit"
-              loading={isLoading}
-              onClick={onSubmit}
-            >
-              Entrar
+            {/* {error?.trim()?.length > 0 ? <ErrorMessage text={error} /> : null} */}
+
+            <Button className={classes.button} onClick={onSubmit}>
+              Cadastrar
             </Button>
           </Box>
-          <Group className={classes.group}>
-            <Button
-              variant="subtle"
-              className={classes.text}
-              onClick={() => navigate('/register')}
+          <Anchor className={classes.text} href="">
+            <Text
+              variant="gradient"
+              gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
+              onClick={() => navigate('/')}
             >
-              <Text
-                variant="gradient"
-                gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
-              >
-                Realizar cadastro
-              </Text>
-            </Button>
-            <Button variant="subtle" className={classes.text}>
-              <Text
-                variant="gradient"
-                gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
-              >
-                Esqueci a senha
-              </Text>
-            </Button>
-          </Group>
+              Voltar
+            </Text>
+          </Anchor>
         </Stack>
       </Paper>
     </Box>
