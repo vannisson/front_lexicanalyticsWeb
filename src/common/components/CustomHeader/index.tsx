@@ -33,7 +33,7 @@ export default function CustomHeader({ children }: ICustomAppShell) {
   const [opened, setOpened] = useState(false)
   const onLeave = () => {
     localStorage.setItem('@lexicanalytics:user', 'undefined')
-    navigate('/login')
+    navigate('/')
   }
 
   return (

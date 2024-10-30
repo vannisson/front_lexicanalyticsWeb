@@ -1,26 +1,26 @@
-import axios, { Method } from "axios";
-import baseURL from "./baseURL";
+import axios, { Method } from 'axios'
+import baseURL from './baseURL'
 
 export class ApiService {
-  private apiURL: any;
+  private apiURL: any
   constructor() {
-    this.apiURL = baseURL.baseURLDev;
+    this.apiURL = baseURL.baseURLProd
   }
   public RequestData = (
     HTTPMethod: Method,
     endpoint: string,
-    data: any = "",
-    payload: any = "",
+    data: any = '',
+    payload: any = ''
     // token: any = localStorage.getItem("@lexicanalytics:token") || false
   ) => {
-    let url = `${this.apiURL}${endpoint}`;
-    if (payload !== "") url = `${url}${payload}`;
+    let url = `${this.apiURL}${endpoint}`
+    if (payload !== '') url = `${url}${payload}`
     return new Promise((resolve, reject) =>
       axios({
         method: HTTPMethod,
         headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
           // Authorization: `Bearer ${token}`,
         },
         url,
@@ -28,6 +28,6 @@ export class ApiService {
       })
         .then((response: any) => resolve(response.data))
         .catch((err: any) => reject(err))
-    );
-  };
+    )
+  }
 }

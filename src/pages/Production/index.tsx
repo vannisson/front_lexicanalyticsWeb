@@ -99,10 +99,10 @@ export default function Production() {
               <Text className={classes.textProduction}>
                 Textos adicionados: {data?.productions.length}
               </Text>
-              <Button disabled className={classes.button}>
+              {/* <Button disabled className={classes.button}>
                 <Icon icon="ic:round-file-present" />
                 <Text>Inserir PDF</Text>
-              </Button>
+              </Button> */}
               <Button className={classes.button} onClick={onFinish}>
                 <Icon icon="clarity:plus-circle-solid" />
                 <Text>Adicionar Texto</Text>

@@ -32,7 +32,7 @@ export default function RegisterPaper() {
 
   const { isLoading, mutate, error } = useMutation(register, {
     onSuccess: (data: any) => {
-      navigate('/login')
+      navigate('/')
     },
   })
 
@@ -120,7 +120,7 @@ export default function RegisterPaper() {
             <Text
               variant="gradient"
               gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
-              onClick={() => navigate('/login')}
+              onClick={() => navigate('/')}
             >
               Voltar
             </Text>

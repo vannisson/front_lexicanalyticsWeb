@@ -1,5 +1,5 @@
 export default {
-  // baseURLProd: "https://backend-production-b101.up.railway.app",
-  baseURLDev: 'http://localhost:8000',
+  baseURLProd: 'https://lexicanalytics.rj.r.appspot.com',
+  baseURLDev: 'https://lexicanalytics.rj.r.appspot.com',
   baseIBGE: 'https://servicodados.ibge.gov.br/api/v1/localidades',
 }
