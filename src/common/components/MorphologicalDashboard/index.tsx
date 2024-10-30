@@ -18,7 +18,7 @@ import {
 } from '@mantine/core'
 import useStyles from './styles'
 import { Icon } from '@iconify/react'
-import Chart from 'react-apexcharts';
+import Chart from 'react-apexcharts'
 import {
   flexRender,
   MRT_GlobalFilterTextInput,
@@ -26,7 +26,7 @@ import {
   MRT_ToolbarAlertBanner,
   type MRT_ColumnDef,
   useMantineReactTable,
-} from 'mantine-react-table';
+} from 'mantine-react-table'
 
 import { useState } from 'react'
 interface MorphologicalDashboardProps {
@@ -35,75 +35,86 @@ interface MorphologicalDashboardProps {
 
 interface DetailType {
   word: string
-  tag: string,
-  occurrence: number,
+  tag: string
+  occurrence: number
 }
 
-export default function MorphologicalDashboard({ morphData }:MorphologicalDashboardProps) {
+export default function MorphologicalDashboard({
+  morphData,
+}: MorphologicalDashboardProps) {
   const { classes } = useStyles()
-  const [selectedTextIndex, setSelectedTextIndex] = useState<number>(0);
+  const [selectedTextIndex, setSelectedTextIndex] = useState<number>(0)
 
-  const selectData = morphData?.single?.title.map((title: string, index: number) => ({
-    value: index.toString(),
-    label: title,
-  })) || [];
-  
+  const selectData =
+    morphData?.single?.title.map((title: string, index: number) => ({
+      value: index.toString(),
+      label: title,
+    })) || []
+
   const gramaticalClasses = [
-    { key: "subs", name: "Substantivos" },
-    { key: "verb", name: "Verbos" },
-    { key: "adj", name: "Adjetivos" },
-    { key: "adv", name: "Advérbios" },
-    { key: "art", name: "Artigos" },
-    { key: "pro", name: "Pronomes" },
-    { key: "others", name: "Outros" },
-  ];
+    { key: 'subs', name: 'Substantivos' },
+    { key: 'verb', name: 'Verbos' },
+    { key: 'adj', name: 'Adjetivos' },
+    { key: 'adv', name: 'Advérbios' },
+    { key: 'art', name: 'Artigos' },
+    { key: 'pro', name: 'Pronomes' },
+    { key: 'others', name: 'Outros' },
+  ]
 
   const statTypes = [
-    "mean",
-    "median",
-    // "mode", 
-    "standard_deviation",
-    "minimum",
-    "maximum"
-  ];
+    'mean',
+    'median',
+    // "mode",
+    'standard_deviation',
+    'minimum',
+    'maximum',
+  ]
 
   const formatNumber = (number: number) => {
     if (typeof number === 'number') {
-      return number.toFixed(2);
+      return number.toFixed(2)
     }
-    return '';
-  };
+    return ''
+  }
 
   const renderRows = () => {
-    if (!morphData) return null;
+    if (!morphData) return null
     return gramaticalClasses.map((gramaticalClass, index) => (
       <tr key={index}>
         <td style={{ fontWeight: 'bold' }}>{gramaticalClass.name}</td>
         {statTypes.map((statType) => (
-          <td key={statType}>{formatNumber(morphData.general.tokens[statType][gramaticalClass.key])}</td>
+          <td key={statType}>
+            {formatNumber(
+              morphData.general.tokens[statType][gramaticalClass.key]
+            )}
+          </td>
         ))}
       </tr>
-    ));
-  };
+    ))
+  }
 
   const handleSelectChange = (value: string) => {
-    setSelectedTextIndex(parseInt(value));
-  };
+    setSelectedTextIndex(parseInt(value))
+  }
 
   const getTextValue = () => {
-    if (!morphData || !morphData.single || !morphData.single.text) return '';
-    return morphData.single.text[selectedTextIndex] || '';
-  };
+    if (!morphData || !morphData.single || !morphData.single.text) return ''
+    return morphData.single.text[selectedTextIndex] || ''
+  }
 
   const getTokenValue = (tokenClass: string) => {
-    if (!morphData || !morphData.single) return '';
-    return parseInt(morphData.single.tokens_count[selectedTextIndex][tokenClass] || '');
-  };
+    if (!morphData || !morphData.single) return ''
+    return parseInt(
+      morphData.single.tokens_count[selectedTextIndex][tokenClass] || ''
+    )
+  }
 
   const getTypeValue = (typeClass: string) => {
-    if (!morphData || !morphData.single) return '';
-    return parseInt(morphData.single.types_count[selectedTextIndex][typeClass]|| '');
-  };
+    if (!morphData || !morphData.single) return ''
+    return parseInt(
+      morphData.single.types_count[selectedTextIndex][typeClass] || ''
+    )
+  }
 
   // const getCurrentDetail = () => {
   //   if (!data || !data.single) return '';
@@ -114,66 +125,74 @@ export default function MorphologicalDashboard({ morphData }:MorphologicalDashbo
     {
       name: 'Tokens',
       data: [
-        parseFloat(getTokenValue('subs')),
-        parseFloat(getTokenValue('verb')),
-        parseFloat(getTokenValue('adj')),
-        parseFloat(getTokenValue('adv')),
-        parseFloat(getTokenValue('pro')),
-        parseFloat(getTokenValue('art')),
-        parseFloat(getTokenValue('others'))
+        parseFloat(String(getTokenValue('subs') || '0')),
+        parseFloat(String(getTokenValue('verb') || '0')),
+        parseFloat(String(getTokenValue('adj') || '0')),
+        parseFloat(String(getTokenValue('adv') || '0')),
+        parseFloat(String(getTokenValue('pro') || '0')),
+        parseFloat(String(getTokenValue('art') || '0')),
+        parseFloat(String(getTokenValue('others') || '0')),
       ],
     },
     {
       name: 'Types',
       data: [
-        parseFloat(getTypeValue('subs')),
-        parseFloat(getTypeValue('verb')),
-        parseFloat(getTypeValue('adj')),
-        parseFloat(getTypeValue('adv')),
-        parseFloat(getTypeValue('pro')),
-        parseFloat(getTypeValue('art')),
-        parseFloat(getTypeValue('others'))
+        parseFloat(String(getTokenValue('subs') || '0')),
+        parseFloat(String(getTokenValue('verb') || '0')),
+        parseFloat(String(getTokenValue('adj') || '0')),
+        parseFloat(String(getTokenValue('adv') || '0')),
+        parseFloat(String(getTokenValue('pro') || '0')),
+        parseFloat(String(getTokenValue('art') || '0')),
+        parseFloat(String(getTokenValue('others') || '0')),
       ],
-    }
-  ];
+    },
+  ]
 
   const options = {
     stroke: {
-      width: 2
+      width: 2,
     },
     fill: {
-      opacity: 0.1
+      opacity: 0.1,
     },
     xaxis: {
-      categories: ['Substantivos', 'Verbos', 'Adjetivos', 'Advérbios', 'Pronomes', 'Artigos', 'Outros']
+      categories: [
+        'Substantivos',
+        'Verbos',
+        'Adjetivos',
+        'Advérbios',
+        'Pronomes',
+        'Artigos',
+        'Outros',
+      ],
     },
     yaxis: {
-      show: false
+      show: false,
     },
     legend: {
-    show: true
+      show: true,
+    },
   }
-  };
 
-  const data: DetailType[] = morphData?.single?.countWordOccurrencesWithTag[selectedTextIndex] || []
+  const data: DetailType[] =
+    morphData?.single?.countWordOccurrencesWithTag[selectedTextIndex] || []
   console.log(data)
 
   const columns: MRT_ColumnDef[] = [
-  {
-    accessorKey: 'word',
-    header: 'Palavra',
-    enableSorting: true
-  },
-  {
-    accessorKey: 'tag',
-    header: 'Classificação',
-  },
-  {
-    accessorKey: 'occurrence',
-    header: 'Ocorrência',
-  },
-];
-
+    {
+      accessorKey: 'word',
+      header: 'Palavra',
+      enableSorting: true,
+    },
+    {
+      accessorKey: 'tag',
+      header: 'Classificação',
+    },
+    {
+      accessorKey: 'occurrence',
+      header: 'Ocorrência',
+    },
+  ]
 
   const table = useMantineReactTable({
     columns,
@@ -183,21 +202,21 @@ export default function MorphologicalDashboard({ morphData }:MorphologicalDashbo
       pagination: { pageSize: 10, pageIndex: 0 },
       showGlobalFilter: true,
       sorting: [
-      {
-        id: 'word',
-        desc: false,
-      },
-    ],
+        {
+          id: 'word',
+          desc: false,
+        },
+      ],
     },
     localization: {
-    search: "Buscar",
-    rowsPerPage: 'Linhas por página',
+      search: 'Buscar',
+      rowsPerPage: 'Linhas por página',
     },
     mantinePaginationProps: {
       rowsPerPageOptions: ['5', '10', '15'],
     },
     paginationDisplayMode: 'pages',
-  });
+  })
   return (
     <>
       <Stack className={classes.generalStack}>
@@ -229,7 +248,7 @@ export default function MorphologicalDashboard({ morphData }:MorphologicalDashbo
         <Stack align="center">
           <Text className={classes.dashboardText}>Resultado Individual</Text>
           <Select
-            value={selectedTextIndex.toString()} 
+            value={selectedTextIndex.toString()}
             onChange={(value) => handleSelectChange(value as string)}
             data={selectData}
             label="Escolha um texto"
@@ -237,7 +256,7 @@ export default function MorphologicalDashboard({ morphData }:MorphologicalDashbo
             sx={{ width: '25%', marginLeft: 'auto', marginRight: 'auto' }}
           />
         </Stack>
-        <Tabs variant="outline" defaultValue="text" >
+        <Tabs variant="outline" defaultValue="text">
           <Tabs.List>
             <Tabs.Tab value="text">Texto</Tabs.Tab>
             <Tabs.Tab value="summary">Sumário</Tabs.Tab>
@@ -259,8 +278,10 @@ export default function MorphologicalDashboard({ morphData }:MorphologicalDashbo
           <Tabs.Panel value="summary" pt="xs">
             <Grid sx={{ marginTop: '0.5rem' }}>
               <Grid.Col span={3}>
-                <Stack align='center' sx={{marginBottom: '1rem'}}>
-                  <Text sx={{fontSize: '1.2rem', fontWeight: 650,}}>Distribuição dos Tokens</Text>
+                <Stack align="center" sx={{ marginBottom: '1rem' }}>
+                  <Text sx={{ fontSize: '1.2rem', fontWeight: 650 }}>
+                    Distribuição dos Tokens
+                  </Text>
                 </Stack>
 
                 <Stack align="center" sx={{ gap: '1.5rem' }}>
@@ -276,8 +297,10 @@ export default function MorphologicalDashboard({ morphData }:MorphologicalDashbo
               <Divider size="sm" orientation="vertical" />
 
               <Grid.Col span={3}>
-                <Stack align='center' sx={{marginBottom: '1rem'}}>
-                  <Text sx={{fontSize: '1.2rem', fontWeight: 650,}}>Distribuição dos Types</Text>
+                <Stack align="center" sx={{ marginBottom: '1rem' }}>
+                  <Text sx={{ fontSize: '1.2rem', fontWeight: 650 }}>
+                    Distribuição dos Types
+                  </Text>
                 </Stack>
 
                 <Stack align="center" sx={{ gap: '1.5rem' }}>
@@ -293,9 +316,16 @@ export default function MorphologicalDashboard({ morphData }:MorphologicalDashbo
               <Divider size="sm" orientation="vertical" />
               <Grid.Col span={5}>
                 <Stack align="center">
-                  <Text sx={{fontSize: '1.2rem', fontWeight: 650,}}>Comparativo Tokens vs. Types</Text>
+                  <Text sx={{ fontSize: '1.2rem', fontWeight: 650 }}>
+                    Comparativo Tokens vs. Types
+                  </Text>
                   <Box>
-                    <Chart options={options} series={chartData} type="radar" height="300"/>
+                    <Chart
+                      options={options}
+                      series={chartData}
+                      type="radar"
+                      height="300"
+                    />
                   </Box>
                 </Stack>
               </Grid.Col>
@@ -303,20 +333,20 @@ export default function MorphologicalDashboard({ morphData }:MorphologicalDashbo
           </Tabs.Panel>
 
           <Tabs.Panel value="detail" pt="xs">
-             <Stack align="center" sx={{ gap: '2rem' }}>
+            <Stack align="center" sx={{ gap: '2rem' }}>
               <Flex justify="space-between" align="center">
                 <MRT_GlobalFilterTextInput table={table} />
                 <MRT_TablePagination table={table} />
               </Flex>
               <Table
-                  captionSide="top"
-                  fontSize="md"
-                  highlightOnHover
-                  horizontalSpacing="xl"
-                  striped
-                  verticalSpacing="xs"
-                  m="0"
-                >
+                captionSide="top"
+                fontSize="md"
+                highlightOnHover
+                horizontalSpacing="xl"
+                striped
+                verticalSpacing="xs"
+                m="0"
+              >
                 <thead>
                   {table.getHeaderGroups().map((headerGroup) => (
                     <tr key={headerGroup.id}>
@@ -325,9 +355,10 @@ export default function MorphologicalDashboard({ morphData }:MorphologicalDashbo
                           {header.isPlaceholder
                             ? null
                             : flexRender(
-                                header.column.columnDef.Header ??
+                                (header.column.columnDef
+                                  .Header as React.ReactNode) ??
                                   header.column.columnDef.header,
-                                header.getContext(),
+                                header.getContext()
                               )}
                         </th>
                       ))}
@@ -340,8 +371,9 @@ export default function MorphologicalDashboard({ morphData }:MorphologicalDashbo
                       {row.getVisibleCells().map((cell) => (
                         <td key={cell.id}>
                           {flexRender(
-                            cell.column.columnDef.Cell ?? cell.column.columnDef.cell,
-                            cell.getContext(),
+                            (cell.column.columnDef.Cell as React.ReactNode) ??
+                              cell.column.columnDef.cell,
+                            cell.getContext()
                           )}
                         </td>
                       ))}
@@ -350,7 +382,7 @@ export default function MorphologicalDashboard({ morphData }:MorphologicalDashbo
                 </tbody>
               </Table>
               <MRT_ToolbarAlertBanner stackAlertBanner table={table} />
-            </Stack> 
+            </Stack>
           </Tabs.Panel>
         </Tabs>
       </Stack>
