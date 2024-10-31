@@ -137,13 +137,13 @@ export default function MorphologicalDashboard({
     {
       name: 'Types',
       data: [
-        parseFloat(String(getTokenValue('subs') || '0')),
-        parseFloat(String(getTokenValue('verb') || '0')),
-        parseFloat(String(getTokenValue('adj') || '0')),
-        parseFloat(String(getTokenValue('adv') || '0')),
-        parseFloat(String(getTokenValue('pro') || '0')),
-        parseFloat(String(getTokenValue('art') || '0')),
-        parseFloat(String(getTokenValue('others') || '0')),
+        parseFloat(String(getTypeValue('subs') || '0')),
+        parseFloat(String(getTypeValue('verb') || '0')),
+        parseFloat(String(getTypeValue('adj') || '0')),
+        parseFloat(String(getTypeValue('adv') || '0')),
+        parseFloat(String(getTypeValue('pro') || '0')),
+        parseFloat(String(getTypeValue('art') || '0')),
+        parseFloat(String(getTypeValue('others') || '0')),
       ],
     },
   ]
