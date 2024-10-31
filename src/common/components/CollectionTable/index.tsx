@@ -149,7 +149,9 @@ export default function CollectionTable() {
             <tbody>{rows}</tbody>
           </Table>
         )}
-        {isLoading && <Loader />}
+        {isLoading && <Box className={classes.loader}>
+             <Loader color="blue" />
+             </Box>}
       </Box>
     </>
   )

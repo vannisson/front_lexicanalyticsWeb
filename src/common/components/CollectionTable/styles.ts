@@ -36,6 +36,12 @@ const useStyles = createStyles((theme) => ({
     color:
       'linear-gradient(45deg, rgb(78, 178, 240) 0%, rgb(38, 104, 223) 100%)',
   },
+  loader: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height:"50vh"
+  },
 }))
 
 export default useStyles

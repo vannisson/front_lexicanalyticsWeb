@@ -25,6 +25,12 @@ const useStyles = createStyles((theme) => ({
     border: "0px",
   },
   graph: {},
+  loader: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height:"50vh"
+  },
 }));
 
 export default useStyles;
