@@ -24,7 +24,7 @@ export default function CollectionTable() {
   const { isLoading, data, error } = useQuery('collectionData', collectionTable)
   const { mutate: deleteProductMutate } = useMutation(deleteCollection)
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null)
-  const [editTargetId, setEditTargetId] = useState<string | null>(null)
+  const [editTargetId, setEditTargetId] = useState<string | null>(null) 
   const [
     deleteModalOpened,
     { open: openDeleteModal, close: closeDeleteModal },
@@ -48,11 +48,13 @@ export default function CollectionTable() {
       deleteProductMutate(collectionId?.trim() ?? '', {
         onSuccess(res) {
           queryClient.invalidateQueries(['collectionData'])
+          closeDeleteModal()
         },
         onError(error: any) {},
       })
     }
     close()
+    closeDeleteModal()
   }
 
   const handleView = (collectionId: string) => () => {
