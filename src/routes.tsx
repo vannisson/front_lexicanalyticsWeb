@@ -8,8 +8,9 @@ import Production from './pages/Production'
 import Reports from './pages/Reports'
 import Results from './pages/Results'
 import Register from './pages/Register'
+import ErrorPage from './pages/ErrorPage'
 
-const router = createBrowserRouter([
+const router = createBrowserRouter([ 
   {
     path: '/',
     element: <Login />,
@@ -50,6 +51,12 @@ const router = createBrowserRouter([
       </CustomHeader>
     ),
   },
+  {
+    path: '*',
+    element: (
+      <ErrorPage/>
+    ),
+  }
 ])
 
 export default router
