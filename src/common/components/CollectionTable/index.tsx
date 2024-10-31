@@ -43,6 +43,10 @@ export default function CollectionTable() {
     openEditModal()
   }
 
+  const handleResults = (collectionId: string) => () => {
+    navigate(`/results/${collectionId}`)
+  }
+
   const handleConfirmDelete = (collectionId: string) => {
     if (collectionId) {
       deleteProductMutate(collectionId?.trim() ?? '', {
@@ -77,13 +81,22 @@ export default function CollectionTable() {
               <Icon icon="clarity:plus-circle-solid" />
             </Button>
           </Tooltip>
+          <Tooltip label="Ver resultados" withArrow>
+          <Button
+            variant="subtle"
+            className={classes.iconView}
+            onClick={handleResults(element.id || '')}
+            >
+              <Icon icon="bi:eye" />
+            </Button>
+          </Tooltip>
           <Tooltip label="Editar" withArrow>
             <Button
               variant="subtle"
               className={classes.iconReport}
               onClick={handleEdit(element.id)}
             >
-              <Icon icon="bxs:edit" />
+              <Icon icon="bxs:edit" /> 
             </Button>
           </Tooltip>
           <Tooltip label="Deletar" withArrow>
