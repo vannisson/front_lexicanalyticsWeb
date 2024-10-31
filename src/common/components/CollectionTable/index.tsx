@@ -24,7 +24,7 @@ export default function CollectionTable() {
   const { isLoading, data, error } = useQuery('collectionData', collectionTable)
   const { mutate: deleteProductMutate } = useMutation(deleteCollection)
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null)
-  const [editTargetId, setEditTargetId] = useState<string | null>(null) 
+  const [editTargetId, setEditTargetId] = useState<string | null>(null)
   const [
     deleteModalOpened,
     { open: openDeleteModal, close: closeDeleteModal },
@@ -82,10 +82,10 @@ export default function CollectionTable() {
             </Button>
           </Tooltip>
           <Tooltip label="Ver resultados" withArrow>
-          <Button
-            variant="subtle"
-            className={classes.iconView}
-            onClick={handleResults(element.id || '')}
+            <Button
+              variant="subtle"
+              className={classes.iconView}
+              onClick={handleResults(element.id || '')}
             >
               <Icon icon="bi:eye" />
             </Button>
@@ -96,7 +96,7 @@ export default function CollectionTable() {
               className={classes.iconReport}
               onClick={handleEdit(element.id)}
             >
-              <Icon icon="bxs:edit" /> 
+              <Icon icon="bxs:edit" />
             </Button>
           </Tooltip>
           <Tooltip label="Deletar" withArrow>
@@ -149,9 +149,11 @@ export default function CollectionTable() {
             <tbody>{rows}</tbody>
           </Table>
         )}
-        {isLoading && <Box className={classes.loader}>
-             <Loader color="blue" />
-             </Box>}
+        {isLoading && (
+          <Box className={classes.loader}>
+            <Loader color="blue" />
+          </Box>
+        )}
       </Box>
     </>
   )

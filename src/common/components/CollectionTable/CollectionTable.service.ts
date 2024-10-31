@@ -42,15 +42,19 @@ interface GetReturnType {
   productions: ProductionType[]
 }
 
-const userString: string | null | "" = localStorage.getItem(
+const userString: string | null | '' = localStorage.getItem(
   '@lexicanalytics:user'
 )
 const user = userString ? JSON.parse(userString) : null
 
 export const collectionTable = async (): Promise<ReturnType> => {
   const api = new ApiService()
-  const userId = user.id
-  return (await api.RequestData('GET', `/user/${userId}`, {})) as ReturnType
+
+  if (!user || !user.id) {
+    throw new Error('User not found in local storage.')
+  }
+
+  return (await api.RequestData('GET', `/user/${user.id}`, {})) as ReturnType
 }
 
 export const deleteCollection = async (collectionId: string) => {
