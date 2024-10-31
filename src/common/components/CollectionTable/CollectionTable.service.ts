@@ -50,9 +50,9 @@ const user = userString ? JSON.parse(userString) : null
 export const collectionTable = async (): Promise<ReturnType> => {
   const api = new ApiService()
 
-  if (!user || !user.id) {
-    throw new Error('User not found in local storage.')
-  }
+  // if (!user || !user.id) {
+  //   throw new Error('User not found in local storage.')
+  // }
 
   return (await api.RequestData('GET', `/user/${user.id}`, {})) as ReturnType
 }
