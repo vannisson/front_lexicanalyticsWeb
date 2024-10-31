@@ -74,7 +74,7 @@ export default function CollectionModal({ onClose }: CollectionModalProps) {
           >
             Criar uma nova coleção
           </Text>
-          <Modal.CloseButton />
+          {/* <Modal.CloseButton /> */}
         </Group>
         <Box className={classes.form}>
           <TextInput
