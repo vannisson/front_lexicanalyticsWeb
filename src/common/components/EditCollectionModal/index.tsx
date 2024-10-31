@@ -65,7 +65,7 @@ export default function EditCollectionModal({
   const onFinish = () => {
     const { name, description } = form.values
     const { hasErrors } = form.validate()
-    console.log(form.values)
+    // console.log(form.values)
     if (!hasErrors) {
       mutate({
         name,

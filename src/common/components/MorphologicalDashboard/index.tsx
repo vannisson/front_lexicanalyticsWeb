@@ -176,7 +176,6 @@ export default function MorphologicalDashboard({
 
   const data: DetailType[] =
     morphData?.single?.countWordOccurrencesWithTag[selectedTextIndex] || []
-  console.log(data)
 
   const columns: MRT_ColumnDef[] = [
     {
@@ -260,7 +259,7 @@ export default function MorphologicalDashboard({
           <Tabs.List>
             <Tabs.Tab value="text">Texto</Tabs.Tab>
             <Tabs.Tab value="summary">Sumário</Tabs.Tab>
-            <Tabs.Tab value="detail">Detalhes</Tabs.Tab>
+            {/* <Tabs.Tab value="detail">Detalhes</Tabs.Tab> */}
           </Tabs.List>
 
           <Tabs.Panel value="text" pt="xs">
@@ -332,7 +331,7 @@ export default function MorphologicalDashboard({
             </Grid>
           </Tabs.Panel>
 
-          <Tabs.Panel value="detail" pt="xs">
+          {/* <Tabs.Panel value="detail" pt="xs">
             <Stack align="center" sx={{ gap: '2rem' }}>
               <Flex justify="space-between" align="center">
                 <MRT_GlobalFilterTextInput table={table} />
@@ -383,7 +382,7 @@ export default function MorphologicalDashboard({
               </Table>
               <MRT_ToolbarAlertBanner stackAlertBanner table={table} />
             </Stack>
-          </Tabs.Panel>
+          </Tabs.Panel> */}
         </Tabs>
       </Stack>
     </>
