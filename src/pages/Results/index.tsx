@@ -9,6 +9,7 @@ import {
   Text,
   TextInput,
   Textarea,
+  Loader
 } from '@mantine/core'
 import { useNavigate, useParams } from 'react-router-dom'
 import useStyles from './styles'
@@ -62,8 +63,11 @@ export default function Results() {
         </Tabs.List>
 
         <Tabs.Panel value="morphological" pt="xs">
-          {isLoading ? (
-            <p>Loading data...</p>
+          {isLoading ? ( 
+          <Box className={classes.loader}>
+          <Loader color="blue" />
+          </Box>
+            
           ) : (
             <MorphologicalDashboard morphData={data} />
           )}
@@ -71,7 +75,9 @@ export default function Results() {
 
         <Tabs.Panel value="richness" pt="xs">
           {isLoading ? (
-            <p>Loading data...</p>
+             <Box className={classes.loader}>
+             <Loader color="blue" />
+             </Box>
           ) : (
             <LexicalDashboard data={data} />
           )}
