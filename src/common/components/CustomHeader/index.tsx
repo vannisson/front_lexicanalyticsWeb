@@ -32,7 +32,7 @@ export default function CustomHeader({ children }: ICustomAppShell) {
   const { classes } = useStyles()
   const [opened, setOpened] = useState(false)
   const onLeave = () => {
-    localStorage.setItem('@lexicanalytics:user', 'undefined')
+    localStorage.clear()
     navigate('/')
   }
 
@@ -60,7 +60,7 @@ export default function CustomHeader({ children }: ICustomAppShell) {
               >
                 Coleções
               </Button>
-              <Button
+              {/* <Button
                 onClick={() => navigate('/reports')}
                 className={classes.button}
                 variant="subtle"
@@ -69,7 +69,7 @@ export default function CustomHeader({ children }: ICustomAppShell) {
               </Button>
               <Button className={classes.button} variant="subtle">
                 Configurações
-              </Button>
+              </Button> */}
             </Group>
             <Group className={classes.userGroup}>
               <Menu opened={opened} onChange={setOpened}>

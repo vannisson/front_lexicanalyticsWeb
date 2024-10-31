@@ -43,16 +43,22 @@ export default function CollectionTable() {
     openEditModal()
   }
 
+  const handleResults = (collectionId: string) => () => {
+    navigate(`/results/${collectionId}`)
+  }
+
   const handleConfirmDelete = (collectionId: string) => {
     if (collectionId) {
       deleteProductMutate(collectionId?.trim() ?? '', {
         onSuccess(res) {
           queryClient.invalidateQueries(['collectionData'])
+          closeDeleteModal()
         },
         onError(error: any) {},
       })
     }
     close()
+    closeDeleteModal()
   }
 
   const handleView = (collectionId: string) => () => {
@@ -73,6 +79,15 @@ export default function CollectionTable() {
               onClick={handleView(element.id)}
             >
               <Icon icon="clarity:plus-circle-solid" />
+            </Button>
+          </Tooltip>
+          <Tooltip label="Ver resultados" withArrow>
+            <Button
+              variant="subtle"
+              className={classes.iconView}
+              onClick={handleResults(element.id || '')}
+            >
+              <Icon icon="bi:eye" />
             </Button>
           </Tooltip>
           <Tooltip label="Editar" withArrow>
@@ -134,7 +149,11 @@ export default function CollectionTable() {
             <tbody>{rows}</tbody>
           </Table>
         )}
-        {isLoading && <Loader />}
+        {isLoading && (
+          <Box className={classes.loader}>
+            <Loader color="blue" />
+          </Box>
+        )}
       </Box>
     </>
   )
