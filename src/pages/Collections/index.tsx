@@ -42,7 +42,7 @@ export default function Collections() {
   })
 
   const onFinish = (values: Formtype) => {
-    console.log(values)
+    // console.log(values)
   }
 
   return (
