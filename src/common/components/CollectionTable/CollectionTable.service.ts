@@ -8,6 +8,7 @@ interface CollectionType {
   id: string
   name: string
   user_id: string
+  productions_count: number
 }
 
 interface UserType {

@@ -110,6 +110,7 @@ export default function Production() {
               <Button
                 className={classes.button}
                 onClick={handleResults(collectionId || '')}
+                disabled={!data?.productions || data.productions.length <= 0}
               >
                 <Icon icon="teenyicons:pie-chart-solid" />
                 <Text>Obter Resultados</Text>
