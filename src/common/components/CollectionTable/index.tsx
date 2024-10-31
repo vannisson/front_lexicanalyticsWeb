@@ -86,6 +86,7 @@ export default function CollectionTable() {
               variant="subtle"
               className={classes.iconView}
               onClick={handleResults(element.id || '')}
+              disabled={element.productions_count <= 0}
             >
               <Icon icon="bi:eye" />
             </Button>
